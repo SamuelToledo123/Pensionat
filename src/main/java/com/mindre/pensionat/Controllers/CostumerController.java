@@ -2,10 +2,10 @@ package com.mindre.pensionat.Controllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Models.Customer;
-import com.mindre.pensionat.Repo.CustomerRepo;
+import com.mindre.pensionat.Services.impl.CustomerService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,50 +13,35 @@ import java.util.List;
 
 @RestController
 @RequestMapping("pensionat")
+@RequiredArgsConstructor
 public class CostumerController {
 
     @Autowired
-    private final CustomerRepo customerRepo;
-    public CostumerController(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
-    }
+    private final CustomerService customerService;
+
 
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
-        return customerRepo.findAll();
+        return customerService.getCustomers();
     }
 
     @PostMapping("/saveCustomers")
     public String saveCustomer(@RequestBody Customer customer) {
-        customerRepo.save(customer);
-        return "Customer was saved successfully";
+        return customerService.saveCustomer(customer);
     }
 
-    @PutMapping("updateCustomer/{id}")
+    @PutMapping("/updateCustomer/{id}")
     public String updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto, BindingResult result) {
-
-        try {
-
-
-            Customer updateCustomer = customerRepo.findById(id).get();
-            updateCustomer.setFirstName(customerDto.getFirstName());
-            updateCustomer.setLastName(customerDto.getLastName());
-            updateCustomer.setEmail(customerDto.getEmail());
-            updateCustomer.setPhoneNumber(customerDto.getPhoneNumber());
-            customerRepo.save(updateCustomer);
-
-        } catch (Exception e) {
-            System.out.println("Exception" + e.getMessage());
-
+        if (result.hasErrors()) {
+            return "Validation Error";
         }
-        return "Customer was updated successfully";
+        return customerService.updateCustomer(id, customerDto);
     }
+
 
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable Long id) {
-        Customer deleteCustomer = customerRepo.findById(id).get();
-        customerRepo.delete(deleteCustomer);
-        return "Customer with the id: " + id + " was deleted successfully";
+        return customerService.deleteCustomer(id);
 
     }
 }
