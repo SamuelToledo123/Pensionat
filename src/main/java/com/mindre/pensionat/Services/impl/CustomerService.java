@@ -18,6 +18,10 @@ public class CustomerService {
     @Autowired
     CustomerRepo customerRepo;
 
+    public CustomerService(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
+
 
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
@@ -33,14 +37,14 @@ public class CustomerService {
     @PutMapping("updateCustomer/{id}")
     public String updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
 
-            Customer updateCustomer = customerRepo.findById(id).get();
-            updateCustomer.setFirstName(customerDto.getFirstName());
-            updateCustomer.setLastName(customerDto.getLastName());
-            updateCustomer.setEmail(customerDto.getEmail());
-            updateCustomer.setPhoneNumber(customerDto.getPhoneNumber());
-            customerRepo.save(updateCustomer);
+        Customer updateCustomer = customerRepo.findById(id).get();
+        updateCustomer.setFirstName(customerDto.getFirstName());
+        updateCustomer.setLastName(customerDto.getLastName());
+        updateCustomer.setEmail(customerDto.getEmail());
+        updateCustomer.setPhoneNumber(customerDto.getPhoneNumber());
+        customerRepo.save(updateCustomer);
 
-            return "Customer was updated successfully";
+        return "Customer was updated successfully";
     }
 
     @DeleteMapping("/deleteCustomer/{id}")
@@ -50,6 +54,7 @@ public class CustomerService {
         return "Customer with the id: " + id + " was deleted successfully";
 
     }
+
 }
 
 

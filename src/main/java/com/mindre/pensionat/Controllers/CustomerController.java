@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("pensionat")
+//@RequestMapping("pensionat")
 @RequiredArgsConstructor
-public class CostumerController {
+public class CustomerController {
 
     @Autowired
     private final CustomerService customerService;
@@ -27,7 +27,8 @@ public class CostumerController {
 
     @PostMapping("/saveCustomers")
     public String saveCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+        customerService.saveCustomer(customer);
+        return "Customer saved";
     }
 
     @PutMapping("/updateCustomer/{id}")

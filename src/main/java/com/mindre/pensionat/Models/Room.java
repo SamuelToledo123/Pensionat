@@ -2,6 +2,7 @@ package com.mindre.pensionat.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Room {
 
     @Id
@@ -23,9 +25,7 @@ public class Room {
     private int amountOfBeds;
     private boolean available = false;
 
-
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRooms= new ArrayList<>();
-
 
 }
