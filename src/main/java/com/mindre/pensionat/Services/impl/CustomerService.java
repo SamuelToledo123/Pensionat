@@ -1,4 +1,4 @@
-package com.mindre.pensionat.Services.impl;
+package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Models.Customer;
@@ -17,7 +17,6 @@ public class CustomerService {
 
     @Autowired
     CustomerRepo customerRepo;
-
 
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {

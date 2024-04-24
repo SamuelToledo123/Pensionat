@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RoomDto {
+
     @NotEmpty(message = "roomType is required")
     private String roomType;
     @Min(0)

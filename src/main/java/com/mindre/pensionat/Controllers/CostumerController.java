@@ -2,7 +2,7 @@ package com.mindre.pensionat.Controllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Models.Customer;
-import com.mindre.pensionat.Services.impl.CustomerService;
+import com.mindre.pensionat.Services.Impl.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,6 @@ public class CostumerController {
         }
         return customerService.updateCustomer(id, customerDto);
     }
-
 
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable Long id) {
