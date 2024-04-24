@@ -30,5 +30,4 @@ public class BookedRoom {
     private Customer customer;
 
 
-
 }

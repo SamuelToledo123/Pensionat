@@ -1,6 +1,8 @@
 package com.mindre.pensionat.Services.impl;
 
+import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
+import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import jakarta.validation.Valid;
@@ -16,7 +18,18 @@ import java.util.List;
 public class CustomerService {
 
     @Autowired
-    CustomerRepo customerRepo;
+    private final CustomerRepo customerRepo;
+
+    public List<DetailedCustomerDto> getAllDetailedCustomers(){
+        return customerRepo.findAll().stream().map(k-> customerToDetailedCustomer(k)).toList();
+    }
+
+    public DetailedCustomerDto customerToDetailedCustomer(Customer customer){
+        return DetailedCustomerDto.builder().id(customer.getId()).firstName(customer.getFirstName())
+                .lastName(customer.getLastName()).email(customer.getEmail())
+                .phoneNumber(customer.getPhoneNumber()).bookedRoomDto(new BookedRoomDto())
+                .build();
+    }
 
 
     @RequestMapping("/customers")

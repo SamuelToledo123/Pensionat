@@ -1,6 +1,7 @@
 package com.mindre.pensionat.Controllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
+import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Services.impl.CustomerService;
 import jakarta.validation.Valid;
@@ -19,7 +20,10 @@ public class CostumerController {
     @Autowired
     private final CustomerService customerService;
 
-
+    @RequestMapping("/detailedcustomers")
+    public List<DetailedCustomerDto> getDetailedCustomers(){
+        return customerService.getAllDetailedCustomers();
+    }
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
