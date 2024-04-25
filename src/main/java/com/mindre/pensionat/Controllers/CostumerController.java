@@ -3,7 +3,7 @@ package com.mindre.pensionat.Controllers;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
-import com.mindre.pensionat.Services.impl.CustomerService;
+import com.mindre.pensionat.Services.Impl.CustomerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ import java.util.List;
 public class CostumerController {
 
     @Autowired
-    private final CustomerService customerService;
+    private final CustomerServiceImpl customerServiceImpl;
 
     @RequestMapping("/detailedcustomers")
     public List<DetailedCustomerDto> getDetailedCustomers(){
-        return customerService.getAllDetailedCustomers();
+        return customerServiceImpl.getAllDetailedCustomers();
     }
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
-        return customerService.getCustomers();
+        return customerServiceImpl.getCustomers();
     }
 
     @PostMapping("/saveCustomers")
     public String saveCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+        return customerServiceImpl.saveCustomer(customer);
     }
 
     @PutMapping("/updateCustomer/{id}")
@@ -39,14 +39,12 @@ public class CostumerController {
         if (result.hasErrors()) {
             return "Validation Error";
         }
-        return customerService.updateCustomer(id, customerDto);
+        return customerServiceImpl.updateCustomer(id, customerDto);
     }
-
-
 
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable Long id) {
-        return customerService.deleteCustomer(id);
+        return customerServiceImpl.deleteCustomer(id);
 
     }
 }

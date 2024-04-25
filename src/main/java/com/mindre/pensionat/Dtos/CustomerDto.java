@@ -14,20 +14,19 @@ import lombok.NoArgsConstructor;
 public class CustomerDto {
 
     @NotEmpty(message = "the Firstname is required")
-    @Size(min = 3)
-    @Size(max = 15)
+    @Size(min = 3, max = 15)
     private String firstName;
     @NotEmpty(message = "the Lastname is required")
-    @Size(min = 3)
-    @Size(max = 15)
+    @Size(min = 3, max = 15)
     private String lastName;
+    @NotEmpty(message = "Email is required")
     @Email
     private String email;
-    @NotNull(message = "Phone number is required")
-    @Size(min = 10)
-    @Size(max = 10)
+    @NotEmpty(message = "Phone number is required")
+    @Size(min = 10, max = 10)
     @Pattern(regexp = "[0-9]+", message = "Only numbers")
     private String  phoneNumber;
+
 
 
 }

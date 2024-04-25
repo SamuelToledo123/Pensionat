@@ -18,7 +18,7 @@ public class BookedRoom {
     private Date checkIn;
     private Date checkOut;
     private int amountPersons;
-    private boolean available = true;
+    private boolean available = false;
 
 
     @ManyToOne

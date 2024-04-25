@@ -23,8 +23,11 @@ public class Customer {
     private String email;
     private String phoneNumber;
 
+
     @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRooms = new ArrayList<>();
+
+
 
 
 }
