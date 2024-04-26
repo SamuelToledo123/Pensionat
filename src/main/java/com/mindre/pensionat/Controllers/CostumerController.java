@@ -3,7 +3,7 @@ package com.mindre.pensionat.Controllers;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
-import com.mindre.pensionat.Services.Impl.CustomerServiceImpl;
+import com.mindre.pensionat.Services.impl.CustomerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,6 +15,7 @@ import java.util.Date;
 @Builder
 public class BookedRoomDto {
 
+    private Long id;
     @DateTimeFormat
     private Date checkIn;
     @DateTimeFormat

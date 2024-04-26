@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.mindre.pensionat.Services.Impl.CustomerServiceImpl;
+import com.mindre.pensionat.Services.impl.CustomerServiceImpl;
 
 import java.util.List;
 

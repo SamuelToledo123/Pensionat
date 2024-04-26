@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +30,5 @@ public class DetailedCustomerDto {
     @Pattern(regexp = "[0-9]+", message = "Only numbers")
     private String  phoneNumber;
 
-    private BookedRoomDto bookedRoomDto;
+    private List<BookedRoomDto> bookedRooms;
 }

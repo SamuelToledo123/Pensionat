@@ -1,9 +1,11 @@
-package com.mindre.pensionat.Services.Impl;
+package com.mindre.pensionat.Services.impl;
 
 import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
+import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
+import com.mindre.pensionat.Repo.BookedRoomRepo;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,16 +26,33 @@ public class CustomerServiceImpl  {
 
     @Autowired
     private final CustomerRepo customerRepo;
+    private final BookedRoomRepo bookedRoomRepo;
 
     public List<DetailedCustomerDto> getAllDetailedCustomers(){
         return customerRepo.findAll().stream().map(k-> customerToDetailedCustomer(k)).toList();
     }
 
-    public DetailedCustomerDto customerToDetailedCustomer(Customer customer){
-        return DetailedCustomerDto.builder().id(customer.getId()).firstName(customer.getFirstName())
-                .lastName(customer.getLastName()).email(customer.getEmail())
-                .phoneNumber(customer.getPhoneNumber()).bookedRoomDto(new BookedRoomDto())
+    public DetailedCustomerDto customerToDetailedCustomer(Customer customer) {
+        List<BookedRoomDto> bookedRoomDtos = customer.getBookedRooms().stream()
+                .map(this::bookedRoomToBookedroomDto)
+                .collect(Collectors.toList());
+
+        return DetailedCustomerDto.builder()
+                .id(customer.getId())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .email(customer.getEmail())
+                .phoneNumber(customer.getPhoneNumber())
+                .bookedRooms(bookedRoomDtos)
                 .build();
+    }
+
+    public BookedRoomDto bookedRoomToBookedroomDto(BookedRoom bookedRoom) {
+        return BookedRoomDto.builder()
+                .id(bookedRoom.getId())
+                .checkIn(bookedRoom.getCheckIn())
+                .checkOut(bookedRoom.getCheckOut())
+                .amountPersons(bookedRoom.getAmountPersons()).build();
     }
 
 
