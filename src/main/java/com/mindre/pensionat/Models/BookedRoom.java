@@ -19,7 +19,7 @@ public class BookedRoom {
     private Date checkIn;
     private Date checkOut;
     private int amountPersons;
-    private boolean available = true;
+    private boolean available = false;
 
 
     @ManyToOne
@@ -29,7 +29,6 @@ public class BookedRoom {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
 
 
 }
