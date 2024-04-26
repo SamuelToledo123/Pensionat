@@ -18,6 +18,7 @@ public class CustomerService {
     @Autowired
     CustomerRepo customerRepo;
 
+
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
         return customerRepo.findAll();

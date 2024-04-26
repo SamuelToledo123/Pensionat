@@ -23,6 +23,7 @@ public class CustomerServiceImpl  {
 
     @Autowired
     private final CustomerRepo customerRepo;
+    private final BookedRoomService bookedRoomService;
 
     public List<DetailedCustomerDto> getAllDetailedCustomers(){
         return customerRepo.findAll().stream().map(k-> customerToDetailedCustomer(k)).toList();
@@ -31,8 +32,9 @@ public class CustomerServiceImpl  {
     public DetailedCustomerDto customerToDetailedCustomer(Customer customer){
         return DetailedCustomerDto.builder().id(customer.getId()).firstName(customer.getFirstName())
                 .lastName(customer.getLastName()).email(customer.getEmail())
-                .phoneNumber(customer.getPhoneNumber()).bookedRoomDto(new BookedRoomDto())
-                .build();
+                .phoneNumber(customer.getPhoneNumber())
+                .konton(customer.getBookedRooms()
+                        .stream().map(bookedRoom -> bookedRoomService.bookedRoomToBookedroomDto(bookedRoom)).toList()).build();
     }
 
 

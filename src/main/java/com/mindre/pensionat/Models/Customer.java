@@ -26,7 +26,7 @@ public class Customer {
 
 
     @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
-    private List<BookedRoom> bookedRooms = new ArrayList<>();
+    private List<BookedRoom> bookedRooms;
 
 
 
