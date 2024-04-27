@@ -1,8 +1,10 @@
 package com.mindre.pensionat.Controllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
+import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
-import com.mindre.pensionat.Services.Impl.CustomerService;
+import com.mindre.pensionat.Services.CustomerService;
+import com.mindre.pensionat.Services.Impl.CustomerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,11 @@ public class CostumerController {
 
     @Autowired
     private final CustomerService customerService;
+
+    @RequestMapping("kunder")
+    public List<DetailedCustomerDto> getAllKunder(){
+        return customerService.getAllKunder();
+    }
 
 
     @RequestMapping("/customers")

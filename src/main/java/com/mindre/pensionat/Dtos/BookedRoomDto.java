@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 public class BookedRoomDto {
 
-    Long id;
+    private Long id;
     @DateTimeFormat
     private Date checkIn;
     @DateTimeFormat
@@ -23,4 +23,5 @@ public class BookedRoomDto {
     @Min(0)
     private int amountPersons;
 
+    //konto
 }

@@ -23,6 +23,7 @@ public class BookedRoom {
     private boolean available = false;
 
 
+    //konto
     @ManyToOne
     @JoinColumn(name = "room_id")
     private  Room room;

@@ -25,7 +25,7 @@ public class DetailedBookedRoomDto {
         @Min(0)
         private int amountPersons;
 
-        private List<Customer> customers;
-        private CustomerDto customerDto;
+        //konto
+        private CustomerDto kund;
 
 }

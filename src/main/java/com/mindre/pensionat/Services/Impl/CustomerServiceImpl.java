@@ -1,50 +1,63 @@
 package com.mindre.pensionat.Services.Impl;
 
-import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.CustomerRepo;
+import com.mindre.pensionat.Services.BookedRoomService;
+import com.mindre.pensionat.Services.CustomerService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-@RequestMapping("/costumers")
-public class CustomerServiceImpl  {
+//@RequiredArgsConstructor
+public class CustomerServiceImpl implements CustomerService {
 
+    //kund
     @Autowired
-    private final CustomerRepo customerRepo;
+    CustomerRepo customerRepo;
     private final BookedRoomService bookedRoomService;
 
-    public List<DetailedCustomerDto> getAllDetailedCustomers(){
-        return customerRepo.findAll().stream().map(k-> customerToDetailedCustomer(k)).toList();
+    public CustomerServiceImpl(BookedRoomService bookedRoomService) {
+        this.bookedRoomService = bookedRoomService;
     }
 
-    public DetailedCustomerDto customerToDetailedCustomer(Customer customer){
-        return DetailedCustomerDto.builder().id(customer.getId()).firstName(customer.getFirstName())
-                .lastName(customer.getLastName()).email(customer.getEmail())
-                .phoneNumber(customer.getPhoneNumber())
-                .konton(customer.getBookedRooms()
-                        .stream().map(bookedRoom -> bookedRoomService.bookedRoomToBookedroomDto(bookedRoom)).toList()).build();
+
+    @Override
+    public List<DetailedCustomerDto> getAllKunder() {
+        return customerRepo.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
 
+    @Override
+    public CustomerDto kundToKundDto(Customer c) {
+        return CustomerDto.builder().id(c.getId())
+                        .firstName(c.getFirstName())
+                .lastName(c.getLastName()).build();
+    }
+
+    @Override
+    public DetailedCustomerDto kundToDetailedKundDto(Customer c) {
+        return DetailedCustomerDto.builder().id(c.getId()).firstName(c.getFirstName()).lastName(c.getLastName()).email(c.getEmail()).phoneNumber(c.getPhoneNumber())
+                .reservations(c.getBookedRooms().stream()
+                        .map(konto -> bookedRoomService.kontoToKontoDto(konto)).toList()).build();
+    }
+
+    @Override
+    public List<Customer> getCustomers() {
+        return null;
+    }
 
     @RequestMapping("/customers")
-    public List<Customer> getCustomers() {
-        return customerRepo.findAll();
+    public List<DetailedCustomerDto> getAllCustomers() {
+        return customerRepo.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
 
     @PostMapping("/saveCustomers")
-    public String saveCustomer(@RequestBody Customer customer) {
+    public String saveCustomer( @RequestBody Customer customer) {
         customerRepo.save(customer);
         return "Customer was saved successfully";
     }
@@ -69,108 +82,6 @@ public class CustomerServiceImpl  {
         return "Customer with the id: " + id + " was deleted successfully";
 
     }
-
-
-    // Service Metoder för Controller
-
-    @GetMapping({"","/"})
-    public String getInfoCustomers(Model model) {
-        List<Customer> customers = customerRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
-        model.addAttribute("customers",customers);
-        return "customers/index";
-    }
-    @GetMapping("/create")
-    public String getCreatePage(Model model) {
-        CustomerDto customerDto = new CustomerDto();
-        model.addAttribute("customerDto", customerDto);
-
-        return "customers/CreateCustomer";
-    }
-
-    @PostMapping("/create")
-    public String createCustomer(@Valid @ModelAttribute CustomerDto customerDto, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "customers/CreateCustomer";
-        }
-
-        try {
-
-            Customer customer = new Customer();
-            customer.setFirstName(customerDto.getFirstName());
-            customer.setLastName(customerDto.getLastName());
-            customer.setEmail(customerDto.getEmail());
-            customer.setPhoneNumber(customerDto.getPhoneNumber());
-
-            customerRepo.save(customer);
-
-
-        } catch (Exception e) {
-            System.out.println("Error occurred while creating the customer!" + e.getMessage());
-        }
-        return "redirect:/customers";
-    }
-
-    @GetMapping("/edit")
-    public String getEditPage(Model model, @RequestParam Long id) {
-
-
-        Customer customer = customerRepo.findById(id).get();
-        model.addAttribute("customer",customer);
-
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setFirstName(customer.getFirstName());
-        customerDto.setLastName(customer.getLastName());
-        customerDto.setEmail(customer.getEmail());
-        customerDto.setPhoneNumber(customer.getPhoneNumber());
-
-        model.addAttribute("customerDto", customerDto);
-
-        return "customers/EditCustomer";
-
-    }
-
-    @PostMapping("/edit")
-    public String editCustomer(Model model, @RequestParam Long id, @Valid @ModelAttribute CustomerDto customerDto,BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "customers/EditCustomer";
-        }
-
-        try {
-
-            Customer customer = customerRepo.findById(id).get();
-            model.addAttribute("customer",customer);
-
-            customer.setFirstName(customerDto.getFirstName());
-            customer.setLastName(customerDto.getLastName());
-            customer.setEmail(customerDto.getEmail());
-            customer.setPhoneNumber(customerDto.getPhoneNumber());
-
-            customerRepo.save(customer);
-
-        } catch (Exception e) {
-            System.out.println("Error while editing customer!" + e.getMessage());
-        }
-        return "redirect:/customers";
-
-    }
-
-    @GetMapping("/delete")
-    public String deleteFromPageCustomer(@RequestParam Long id) {
-
-        try {
-
-            Customer customer = customerRepo.findById(id).get();
-            customerRepo.delete(customer);
-
-
-        } catch (Exception e) {
-            System.out.println("Error While deleting customer!" + e.getMessage());
-        }
-        return "redirect:/customers";
-    }
-
 }
 
 

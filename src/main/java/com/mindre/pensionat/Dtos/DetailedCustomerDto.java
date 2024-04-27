@@ -30,6 +30,6 @@ public class DetailedCustomerDto {
     @Pattern(regexp = "[0-9]+", message = "Only numbers")
     private String  phoneNumber;
 
-    private BookedRoomDto bookedRoomDto;
-    private List<BookedRoomDto> konton;
+    //kund
+    private List<BookedRoomDto> reservations;
 }

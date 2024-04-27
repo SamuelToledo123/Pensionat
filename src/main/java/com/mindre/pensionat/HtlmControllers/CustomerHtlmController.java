@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.mindre.pensionat.Services.Impl.CustomerServiceImpl;
+import com.mindre.pensionat.Services.Impl.CustomerServiceHtmlImpl;
 
 import java.util.List;
 
@@ -19,48 +19,52 @@ import java.util.List;
 public class CustomerHtlmController {
 
     @Autowired
-    private final CustomerServiceImpl customerServiceImpl;
+    private final CustomerServiceHtmlImpl customerServiceHtmlImpl;
 
 
     @GetMapping({"", "/"})
     public String getInfoCustomers(Model model) {
-        return customerServiceImpl.getInfoCustomers(model);
+        return customerServiceHtmlImpl.getInfoCustomers(model);
     }
 
     @GetMapping("/create")
     public String getCreatePage(Model model) {
-        return customerServiceImpl.getCreatePage(model);
+        return customerServiceHtmlImpl.getCreatePage(model);
 
     }
+
     @PostMapping("/create")
     public String createCustomer(@Valid @ModelAttribute CustomerDto customerDto, BindingResult result) {
-        return customerServiceImpl.createCustomer(customerDto, result);
+        return customerServiceHtmlImpl.createCustomer(customerDto, result);
     }
 
     @GetMapping("/edit")
     public String getEditPage(Model model, @RequestParam Long id) {
-        return customerServiceImpl.getEditPage(model, id);
+        return customerServiceHtmlImpl.getEditPage(model, id);
 
     }
 
     @PostMapping("/edit")
-    public String editCustomer(Model model, @RequestParam Long id, @Valid @ModelAttribute CustomerDto customerDto,BindingResult result) {
-        return customerServiceImpl.editCustomer(model, id, customerDto, result);
+    public String editCustomer(Model model, @RequestParam Long id, @Valid @ModelAttribute CustomerDto customerDto, BindingResult result) {
+        return customerServiceHtmlImpl.editCustomer(model, id, customerDto, result);
 
     }
 
     @GetMapping("/delete")
     public String deleteFromPageCustomer(@RequestParam Long id) {
-        return customerServiceImpl.deleteFromPageCustomer(id);
+        return customerServiceHtmlImpl.deleteFromPageCustomer(id);
     }
+}
 
-    @GetMapping("/customers")
+  /*  @GetMapping("/customers")
     public String getAllCustomers(Model model) {
-        List<DetailedCustomerDto> customers = customerServiceImpl.getAllDetailedCustomers();
+        List<DetailedCustomerDto> customers = customerServiceHtmlImpl.getAllDetailedCustomers();
         model.addAttribute("customers", customers);
         return "customers/index";
     }
 }
+
+   */
 
 
 
