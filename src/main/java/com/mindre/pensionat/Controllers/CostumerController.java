@@ -25,8 +25,6 @@ public class CostumerController {
     public List<DetailedCustomerDto> getAllKunder(){
         return customerService.getAllKunder();
     }
-
-
     @RequestMapping("/customers")
     public List<Customer> getCustomers() {
         return customerService.getCustomers();

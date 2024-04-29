@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/form.css">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+
+<div class="bok-area">
+    <header>
+        <div class="wrapper">
+            <div class="logo">
+                <a href="#">Pensionat</a>
+            </div>
+            <nav>
+                <a href="/customers/create">New Customer</a>
+                <a href="#">Rooms</a>
+                <a href="/customers">All Customers</a>
+                <a href="#">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4">
+                <h2 class="text-center mb-5">Make Reservation</h2>
+
+                <form method="post"  th:object="${makeBookingDTO}">
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">CustomerID</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${makeBookingDTO.customerID}">
+                            <p th:if="${#fields.hasErrors('No customerID found')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.customerID}"></p>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">RoomID</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${makeBookingDTO.roomID}">
+                            <p th:if="${#fields.hasErrors('no roomID found')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.roomID}"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Amount of persons</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${makeBookingDTO.amountOfPersons}">
+                            <p th:if="${#fields.hasErrors('invalid amount')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.amountOfPersons}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Beds</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${makeBookingDTO.amountBeds}"></input>
+                            <p th:if="${#fields.hasErrors('1 or 2')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.amountOfPersons}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Check in</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" th:field="${makeBookingDTO.checkIn}"></input>
+                            <p th:if="${#fields.hasErrors('error date')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.checkIn}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Check out</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" th:field="${makeBookingDTO.checkOut}"></input>
+                            <p th:if="${#fields.hasErrors('error date')}" th:errorclass="text-danger"
+                               th:errors="${makeBookingDTO.checkOut}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a class="btn btn-outline-primary" href="/bookings" role="button">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

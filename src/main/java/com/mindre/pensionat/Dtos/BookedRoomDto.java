@@ -16,9 +16,9 @@ import java.util.Date;
 public class BookedRoomDto {
 
     private Long id;
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date checkIn;
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date checkOut;
     @Min(0)
     private int amountPersons;

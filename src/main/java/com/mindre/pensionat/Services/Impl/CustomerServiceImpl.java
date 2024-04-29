@@ -2,6 +2,7 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
+import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Services.BookedRoomService;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public DetailedCustomerDto kundToDetailedKundDto(Customer c) {
         return DetailedCustomerDto.builder().id(c.getId()).firstName(c.getFirstName()).lastName(c.getLastName()).email(c.getEmail()).phoneNumber(c.getPhoneNumber())
-                .reservations(c.getBookedRooms().stream()
+                .reservations(c.getBookedRoom().stream()
                         .map(konto -> bookedRoomService.kontoToKontoDto(konto)).toList()).build();
     }
 
