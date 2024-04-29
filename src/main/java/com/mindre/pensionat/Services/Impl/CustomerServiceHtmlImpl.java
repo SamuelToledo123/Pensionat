@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/costumers")
 public class CustomerServiceHtmlImpl {
-    //kund
+
 
     @Autowired
     private final CustomerRepo customerRepo;
