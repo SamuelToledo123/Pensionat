@@ -2,12 +2,12 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
-import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Services.BookedRoomService;
 import com.mindre.pensionat.Services.CustomerService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    //kund
+
     @Autowired
     CustomerRepo customerRepo;
+
     private final BookedRoomService bookedRoomService;
 
-    public CustomerServiceImpl(BookedRoomService bookedRoomService) {
-        this.bookedRoomService = bookedRoomService;
-    }
+
 
 
     @Override

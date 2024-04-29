@@ -12,6 +12,7 @@ import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Services.BookedRoomService;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,22 +24,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class BookedRoomServiceImpl implements BookedRoomService {
-    //konto
 
+    @Autowired
     private final BookedRoomRepo bookedRoomRepo;
     private final CustomerRepo customerRepo;
 
 
-
-    @Autowired
-    public BookedRoomServiceImpl(BookedRoomRepo bookedRoomRepo, CustomerRepo customerRepo) {
-        this.bookedRoomRepo = bookedRoomRepo;
-        this.customerRepo = customerRepo;
-    }
-
- //
     public List<DetailedBookedRoomDto> getAllKonto() {
        return bookedRoomRepo.findAll().stream().map( k-> kontoToDtailedKontoDto(k)).toList();
     }

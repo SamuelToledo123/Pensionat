@@ -2,11 +2,8 @@ package com.mindre.pensionat.Controllers;
 
 
 import com.mindre.pensionat.Dtos.BookedRoomDto;
-import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
-import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.BookedRoom;
-import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

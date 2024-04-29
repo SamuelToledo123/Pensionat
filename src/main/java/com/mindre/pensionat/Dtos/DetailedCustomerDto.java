@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class DetailedCustomerDto {
+
     private Long id;
     @NotEmpty(message = "the Firstname is required")
     @Size(min = 3)
@@ -22,14 +23,15 @@ public class DetailedCustomerDto {
     @Size(min = 3)
     @Size(max = 15)
     private String lastName;
+    @NotEmpty(message = "Email is required")
     @Email
     private String email;
-    @NotNull(message = "Phone number is required")
+    @NotNull(message = "Phone-number is required")
     @Size(min = 10)
     @Size(max = 10)
     @Pattern(regexp = "[0-9]+", message = "Only numbers")
     private String  phoneNumber;
 
-    //kund
+
     private List<BookedRoomDto> reservations;
 }
