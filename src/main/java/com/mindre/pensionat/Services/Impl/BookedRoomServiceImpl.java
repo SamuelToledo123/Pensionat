@@ -57,7 +57,7 @@ public class BookedRoomServiceImpl implements BookedRoomService {
                     .checkIn(b.getCheckIn())
                     .checkOut(b.getCheckOut())
                     .amountPersons(b.getAmountPersons())
-                    .kund(new CustomerDto(b.getCustomer().getId(), b.getCustomer().getFirstName(), b.getCustomer().getLastName(),
+                    .customer(new CustomerDto(b.getCustomer().getId(), b.getCustomer().getFirstName(), b.getCustomer().getLastName(),
                             b.getCustomer().getEmail(), b.getCustomer().getPhoneNumber()))
                     .build();
         } else {
