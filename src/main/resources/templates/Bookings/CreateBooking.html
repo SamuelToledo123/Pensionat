@@ -14,7 +14,7 @@
             <a href="/customers/create">New Customer</a>
             <a href="#">Rooms</a>
             <a href="/customers">All Customers</a>
-            <a href="#">Kontakt</a>
+            <a href="/booking/create">Kontakt</a>
         </nav>
     </div>
 </header>
@@ -24,19 +24,19 @@
 <form th:action="@{/booking/create}" th:object="${booking}" method="post">
     <p>
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" th:field="*{customerDto.firstName}" required />
+        <input type="text" id="firstName" th:field="*{customer.firstName}" required />
     </p>
     <p>
         <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" th:field="*{customerDto.lastName}" required />
+        <input type="text" id="lastName" th:field="*{customer.lastName}" required />
     </p>
     <p>
         <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{customerDto.email}" required />
+        <input type="email" id="email" th:field="*{customer.email}" required />
     </p>
     <p>
         <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" th:field="*{customerDto.phoneNumber}" required />
+        <input type="text" id="phoneNumber" th:field="*{customer.phoneNumber}" required />
     </p>
     <p>
         <label for="checkIn">Check-In Date:</label>
@@ -51,7 +51,9 @@
         <input type="number" id="amountPersons" th:field="*{amountPersons}" required min="1" />
     </p>
 
-    <button type="submit">Create Booking</button>
+    <button type="submit" href="/booking/create">Create Booking</button>
+
+
 </form>
 
 </body>

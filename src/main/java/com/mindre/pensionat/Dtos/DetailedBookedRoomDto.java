@@ -18,10 +18,10 @@ public class DetailedBookedRoomDto {
 
 
     private Long id;
-    @DateTimeFormat
-    private Date checkIn;
-    @DateTimeFormat
-    private Date checkOut;
+    @DateTimeFormat(pattern = "yyyy-mm-dd" )
+    private Date  checkIn;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date  checkOut;
     @Min(0)
     private int amountPersons;
 

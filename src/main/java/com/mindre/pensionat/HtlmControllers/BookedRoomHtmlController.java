@@ -38,6 +38,8 @@ public class BookedRoomHtmlController {
     public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
         logger.info("Create booking method called.");
         if (result.hasErrors()) {
+            System.out.println(result);
+            logger.info("Create booking error");
             return "Bookings/CreateBooking";
         }
         try {

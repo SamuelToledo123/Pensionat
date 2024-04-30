@@ -23,6 +23,7 @@ public class CustomerDto {
     @Size(max = 15)
     private String lastName;
 
+
     @Email(message = "email is required")
     private String email;
 

@@ -23,11 +23,11 @@ public class BookedRoom {
     private boolean available = false;
 
 
-    //konto
+    //one to many
     @ManyToOne
     @JoinColumn(name = "room_id")
     private  Room room;
-
+    //one to many
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

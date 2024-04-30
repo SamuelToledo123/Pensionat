@@ -26,7 +26,6 @@ public class Customer {
     private String email;
     private String phoneNumber;
 
-    //kund
 
     @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRoom;
