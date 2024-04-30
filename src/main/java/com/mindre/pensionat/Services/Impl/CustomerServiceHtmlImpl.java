@@ -19,45 +19,9 @@ import java.util.List;
 @RequestMapping("/costumers")
 public class CustomerServiceHtmlImpl {
 
-
     @Autowired
     private final CustomerRepo customerRepo;
 
-
-    @RequestMapping("/customers")
-    public List<Customer> getCustomers() {
-        return customerRepo.findAll();
-    }
-
-    @PostMapping("/saveCustomers")
-    public String saveCustomer(@RequestBody Customer customer) {
-        customerRepo.save(customer);
-        return "Customer was saved successfully";
-    }
-
-    @PutMapping("updateCustomer/{id}")
-    public String updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
-
-            Customer updateCustomer = customerRepo.findById(id).get();
-            updateCustomer.setFirstName(customerDto.getFirstName());
-            updateCustomer.setLastName(customerDto.getLastName());
-            updateCustomer.setEmail(customerDto.getEmail());
-            updateCustomer.setPhoneNumber(customerDto.getPhoneNumber());
-            customerRepo.save(updateCustomer);
-
-            return "Customer was updated successfully";
-    }
-
-    @DeleteMapping("/deleteCustomer/{id}")
-    public String deleteCustomer(@PathVariable Long id) {
-        Customer deleteCustomer = customerRepo.findById(id).get();
-        customerRepo.delete(deleteCustomer);
-        return "Customer with the id: " + id + " was deleted successfully";
-
-    }
-
-
-    // Service Metoder för Controller
 
     @GetMapping({"","/"})
     public String getInfoCustomers(Model model) {

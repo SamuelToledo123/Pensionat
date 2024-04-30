@@ -23,8 +23,8 @@ public class CustomerDto {
     @Size(max = 15)
     private String lastName;
 
-
-    @Email(message = "email is required")
+    @NotEmpty(message = "email is required")
+    @Email
     private String email;
 
     //kund
