@@ -46,8 +46,13 @@ public class BookedRoomHtmlController {
             bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
         } catch (Exception e) {
             System.out.println("Error...");
-            return "Bookings/CreateBooking";
+            return "Bookings/editBookings";
         }
-        return "redirect:/booking";
+        return "redirect:/booking/edit";
+    }
+    @GetMapping("/edit")
+    public String showBookingsList(Model model) {
+
+        return "bookings/editBookings"; // Path to your Thymeleaf template for the list
     }
 }
