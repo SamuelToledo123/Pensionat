@@ -10,4 +10,6 @@ public class PensionatApplication {
         SpringApplication.run(PensionatApplication.class, args);
     }
 
+
+
 }
