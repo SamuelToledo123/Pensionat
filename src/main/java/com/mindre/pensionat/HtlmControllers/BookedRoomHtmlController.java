@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/booking")
@@ -51,8 +53,10 @@ public class BookedRoomHtmlController {
         return "redirect:/booking/edit";
     }
     @GetMapping("/edit")
-    public String showBookingsList(Model model) {
-
-        return "bookings/editBookings"; // Path to your Thymeleaf template for the list
+    public String listAllBookings(Model model) {
+        List<DetailedBookedRoomDto> allBookings = bookedRoomServiceHtml.getAllDetailedBookedRoomDto();
+        model.addAttribute("bookings", allBookings);
+        return "bookings/editBookings";
     }
+
 }

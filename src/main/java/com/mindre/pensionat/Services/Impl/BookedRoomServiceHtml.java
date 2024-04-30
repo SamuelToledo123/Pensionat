@@ -1,5 +1,7 @@
 package com.mindre.pensionat.Services.Impl;
 
+import com.mindre.pensionat.Dtos.BookedRoomDto;
+import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class BookedRoomServiceHtml {
@@ -20,6 +26,28 @@ public class BookedRoomServiceHtml {
     @Autowired
     private final CustomerRepo customerRepo;
     private final BookedRoomRepo bookedRoomRepo;
+
+
+    public List<DetailedBookedRoomDto> getAllDetailedBookedRoomDto() {
+        List<BookedRoom> bookedRooms = bookedRoomRepo.findAll();
+        return bookedRooms.stream()
+                .map(this::bookedRoomToDetailedBookedRoomDto)
+                .collect(Collectors.toList());
+    }
+    public DetailedBookedRoomDto bookedRoomToDetailedBookedRoomDto(BookedRoom b) {
+        if (b.getCustomer() != null) {
+            return DetailedBookedRoomDto.builder()
+                    .id(b.getId())
+                    .checkIn(b.getCheckIn())
+                    .checkOut(b.getCheckOut())
+                    .amountPersons(b.getAmountPersons())
+                    .customer(new CustomerDto(b.getCustomer().getId(), b.getCustomer().getFirstName(), b.getCustomer().getLastName(),
+                            b.getCustomer().getEmail(), b.getCustomer().getPhoneNumber()))
+                    .build();
+        } else {
+            return null;
+        }
+    }
     public void createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
 
         try {
