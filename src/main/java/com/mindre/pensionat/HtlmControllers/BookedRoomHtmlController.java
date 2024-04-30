@@ -45,7 +45,7 @@ public class BookedRoomHtmlController {
         try {
             bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
         } catch (Exception e) {
-            System.out.println("Error...");
+            System.out.println("Error..." + e);
             return "Bookings/CreateBooking";
         }
         return "redirect:/booking";
