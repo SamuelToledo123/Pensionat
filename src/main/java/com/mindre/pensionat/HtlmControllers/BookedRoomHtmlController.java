@@ -35,14 +35,14 @@ public class BookedRoomHtmlController {
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
     private final RoomRepo roomRepo;
-    private final BookedRoomRepo bookedRoomRepo;
+
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         DetailedBookedRoomDto booking = new DetailedBookedRoomDto();
-        booking.setCustomer(new CustomerDto()); // Initialize nested DTO
+        booking.setCustomer(new CustomerDto());
         booking.setRoom(new RoomDto());
 
         List<Room> rooms = roomRepo.findAll();
@@ -54,15 +54,14 @@ public class BookedRoomHtmlController {
 
     @PostMapping("/create")
     public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
-        logger.info("Create booking method called.");
         if (result.hasErrors()) {
-            System.out.println(result);
-            logger.info("Create booking error");
             return "Bookings/CreateBooking";
         }
         try {
+            logger.info("Create booking method called.");
             RoomDto roomDto = detailedBookedRoomDto.getRoom();
             Room room = roomRepo.findById(roomDto.getId()).orElse(null);
+
 
             if(room != null) {
                 room.setAvailable(false);
@@ -76,7 +75,8 @@ public class BookedRoomHtmlController {
             System.out.println("Error..." + e.getMessage());
             return "Bookings/CreateBooking";
         }
-        return "redirect:/booking";
+        return "redirect:Bookings/editBookings";
+
     }
     @GetMapping("/edit")
     public String listAllBookings(Model model) {
