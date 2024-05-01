@@ -22,73 +22,74 @@
             </nav>
         </div>
     </header>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto rounded border p-4 m-4">
-            <h2 class="text-center mb-5">Edit Customer</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4">
+                <h2 class="text-center mb-5">Edit Customer</h2>
 
-            <form method="post"  th:object="${customerDto}">
-                <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">ID</label>
-                    <div class="col-sm-8">
-                        <input readonly class="form-control-plaintext" th:value="${customer.id}">
+                <form method="post"  th:object="${customerDto}">
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">ID</label>
+                        <div class="col-sm-8">
+                            <input readonly class="form-control-plaintext" th:value="${customer.id}">
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">First Name</label>
-                    <div class="col-sm-8">
-                        <input class="form-control" th:field="${customerDto.firstName}">
-                        <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="text-danger"
-                           th:errors="${customerDto.firstName}"></p>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">First Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${customerDto.firstName}">
+                            <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="text-danger"
+                               th:errors="${customerDto.firstName}"></p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">Last Name</label>
-                    <div class="col-sm-8">
-                        <input class="form-control"  th:field="${customerDto.lastName}">
-                        <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="text-danger"
-                           th:errors="${customerDto.lastName}"></p>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${customerDto.lastName}">
+                            <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="text-danger"
+                               th:errors="${customerDto.lastName}"></p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-8">
-                        <input class="form-control"  th:field="${customerDto.email}">
-                        <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger"
-                           th:errors="${customerDto.email}"></p>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input class="form-control"  th:field="${customerDto.email}">
+                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger"
+                               th:errors="${customerDto.email}"></p>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label">Phone Number</label>
-                    <div class="col-sm-8">
-                        <input class="form-control"  th:field="${customerDto.phoneNumber}">
-                        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="text-danger"
-                           th:errors="${customerDto.phoneNumber}"></p>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Phone Number</label>
+                        <div class="col-sm-8">
+                            <input class="form-control"  th:field="${customerDto.phoneNumber}">
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="text-danger"
+                               th:errors="${customerDto.phoneNumber}"></p>
+                        </div>
                     </div>
-                </div>
 
 
 
-                <div class="row">
-                    <div class="offset-sm-4 col-sm-4 d-grid">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a class="btn btn-outline-primary" href="/customers" role="button">Cancel</a>
+                        </div>
                     </div>
-                    <div class="col-sm-4 d-grid">
-                        <a class="btn btn-primary" href="/customers" role="button">Cancel</a>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
+
         </div>
-
     </div>
-</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+

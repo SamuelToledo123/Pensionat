@@ -91,14 +91,14 @@ public class CustomerServiceHtmlImpl {
     @PostMapping("/edit")
     public String editCustomer(Model model, @RequestParam Long id, @Valid @ModelAttribute CustomerDto customerDto,BindingResult result) {
 
-        if (result.hasErrors()) {
-            return "customers/EditCustomer";
-        }
-
         try {
 
             Customer customer = customerRepo.findById(id).get();
             model.addAttribute("customer",customer);
+
+        if (result.hasErrors()) {
+            return "customers/EditCustomer";
+        }
 
             customer.setFirstName(customerDto.getFirstName());
             customer.setLastName(customerDto.getLastName());
