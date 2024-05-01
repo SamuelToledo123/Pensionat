@@ -5,6 +5,8 @@ import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@RequestMapping("/costumers")
 public class CustomerServiceHtmlImpl {
 
     @Autowired
     private final CustomerRepo customerRepo;
+    private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
 
     @GetMapping({"","/"})
@@ -53,6 +55,7 @@ public class CustomerServiceHtmlImpl {
             customer.setPhoneNumber(customerDto.getPhoneNumber());
 
             customerRepo.save(customer);
+            logger.info("Saved customer with ID: {}", customer.getId());
 
 
         } catch (Exception e) {
@@ -64,9 +67,9 @@ public class CustomerServiceHtmlImpl {
     @GetMapping("/edit")
     public String getEditPage(Model model, @RequestParam Long id) {
 
-
+        try {
         Customer customer = customerRepo.findById(id).get();
-        model.addAttribute("customer",customer);
+        model.addAttribute("customer", customer);
 
         CustomerDto customerDto = new CustomerDto();
         customerDto.setFirstName(customer.getFirstName());
@@ -75,6 +78,11 @@ public class CustomerServiceHtmlImpl {
         customerDto.setPhoneNumber(customer.getPhoneNumber());
 
         model.addAttribute("customerDto", customerDto);
+
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            return "redirect:/customers";
+        }
 
         return "customers/EditCustomer";
 
@@ -97,7 +105,10 @@ public class CustomerServiceHtmlImpl {
             customer.setEmail(customerDto.getEmail());
             customer.setPhoneNumber(customerDto.getPhoneNumber());
 
+            model.addAttribute("customerDto" , customerDto);
+
             customerRepo.save(customer);
+            logger.info("Updated customer with ID: {}" , customer.getId());
 
         } catch (Exception e) {
             System.out.println("Error while editing customer!" + e.getMessage());
@@ -113,6 +124,7 @@ public class CustomerServiceHtmlImpl {
 
             Customer customer = customerRepo.findById(id).get();
             customerRepo.delete(customer);
+            logger.info("Deleted customer with ID: {}" , customer.getId());
 
 
         } catch (Exception e) {
