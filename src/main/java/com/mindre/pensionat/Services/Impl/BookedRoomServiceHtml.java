@@ -37,6 +37,7 @@ public class BookedRoomServiceHtml {
                 .map(this::bookedRoomToDetailedBookedRoomDto)
                 .collect(Collectors.toList());
     }
+
     public DetailedBookedRoomDto bookedRoomToDetailedBookedRoomDto(BookedRoom b) {
         if (b.getCustomer() != null) {
             return DetailedBookedRoomDto.builder()
@@ -51,12 +52,14 @@ public class BookedRoomServiceHtml {
             return null;
         }
     }
+
     public void createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
 
         try {
 
             Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
                     .orElseThrow(() -> new RuntimeException("Room not found"));
+
 
             BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
@@ -65,8 +68,12 @@ public class BookedRoomServiceHtml {
             newBookedRoom.setRoom(selectedRoom);
 
 
-            if (!roomIsAvailable(detailedBookedRoomDto, bookedRoomRepo.findAll())) {
-                throw new RuntimeException("Room is not available for the specified dates.");
+            boolean IsroomIsAvailable = roomIsAvailable(selectedRoom,newBookedRoom, bookedRoomRepo.findAll());
+
+            if (IsroomIsAvailable) {
+                checkReservation(selectedRoom.getId(), newBookedRoom);
+            } else {
+                throw new RuntimeException("Tyvärr, detta rum är inte tillgängligt för valda datum");
             }
 
             Customer newCustomer = new Customer();
@@ -74,14 +81,6 @@ public class BookedRoomServiceHtml {
             newCustomer.setLastName(detailedBookedRoomDto.getCustomerDto().getLastName());
             newCustomer.setEmail(detailedBookedRoomDto.getCustomerDto().getEmail());
             newCustomer.setPhoneNumber(detailedBookedRoomDto.getCustomerDto().getPhoneNumber());
-
-
-          /*  BookedRoom newBookedRoom = new BookedRoom();
-            newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
-            newBookedRoom.setCheckOut(detailedBookedRoomDto.getCheckOut());
-            newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
-            newBookedRoom.setCustomer(newCustomer);
-            bookedRoomRepo.save(newBookedRoom);*/
 
             customerRepo.save(newCustomer);
             logger.info("Saved customer with ID: {}", newCustomer.getId());
@@ -92,17 +91,21 @@ public class BookedRoomServiceHtml {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());
         }
     }
+
     public void deleteBooking(Long id) {
         bookedRoomRepo.deleteById(id);
     }
+
     public BookedRoomDto bookedRoomtoBookedRoomDto(BookedRoom b) {
         return BookedRoomDto.builder().id(b.getId()).amountPersons(b.getAmountPersons()).build();
     }
+
     public BookedRoomDto getBookedRoomDtoById(Long id) {
         return bookedRoomRepo.findById(id)
                 .map(this::bookedRoomtoBookedRoomDto)
                 .orElseThrow(() -> new IllegalArgumentException("Wrong id: " + id));
     }
+
     public void updateBookedRoom(Long id, BookedRoomDto bookedRoomDto) {
         BookedRoom bookedRoom = bookedRoomRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("wrong booking Id:" + id));
         bookedRoom.setCheckIn(bookedRoomDto.getCheckIn());
@@ -111,25 +114,43 @@ public class BookedRoomServiceHtml {
     }
 
 
-    private boolean roomIsAvailable(DetailedBookedRoomDto reservationRequest, List<BookedRoom> existingReservations) {
+    public String checkReservation(Long roomId, BookedRoom bookingRequest) {
+
+
+        if (bookingRequest.getCheckOut().before(bookingRequest.getCheckIn())) {
+            throw new RuntimeException("Check-in date must come before check-out date");
+        }
+        Room room = roomRepo.findById(roomId).get();
+        List<BookedRoom> existingBookings = room.getBookedRooms();
+            room.addBooking(bookingRequest);
+
+        return "HYPE";
+    }
+
+    public BookedRoom findByID(Long id) {
+        return bookedRoomRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("No booking found with booking code :" + id));
+
+    }
+
+
+    private boolean roomIsAvailable(Room room, BookedRoom reservationRequest, List<BookedRoom> existingReservations) {
         return existingReservations.stream()
+                .filter(existingBooking -> existingBooking.getRoom().equals(room))
                 .noneMatch(existingBooking ->
                         reservationRequest.getCheckIn().equals(existingBooking.getCheckIn())
                                 || reservationRequest.getCheckOut().before(existingBooking.getCheckOut())
                                 || (reservationRequest.getCheckIn().after(existingBooking.getCheckIn())
                                 && reservationRequest.getCheckIn().before(existingBooking.getCheckOut()))
                                 || (reservationRequest.getCheckIn().before(existingBooking.getCheckIn())
-
                                 && reservationRequest.getCheckOut().equals(existingBooking.getCheckOut()))
                                 || (reservationRequest.getCheckIn().before(existingBooking.getCheckIn())
-
                                 && reservationRequest.getCheckOut().after(existingBooking.getCheckOut()))
-
                                 || (reservationRequest.getCheckIn().equals(existingBooking.getCheckOut())
                                 && reservationRequest.getCheckOut().equals(existingBooking.getCheckIn()))
-
                                 || (reservationRequest.getCheckIn().equals(existingBooking.getCheckOut())
                                 && reservationRequest.getCheckOut().equals(reservationRequest.getCheckIn()))
                 );
     }
 }
+

@@ -20,11 +20,11 @@ public class Room {
     private String roomType;
     private int roomSize;
     private int amountOfBeds;
-    private boolean available = true;
+    private boolean available = false;
 
 
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
-    private List<BookedRoom> bookedRooms= new ArrayList<>();
+    private List<BookedRoom> bookedRooms;
 
     public Room(Long id, String roomType, int roomSize, int amountOfBeds, boolean available) {
         this.id = id;
@@ -32,5 +32,16 @@ public class Room {
         this.roomSize = roomSize;
         this.amountOfBeds = amountOfBeds;
         this.available = available;
+        this.bookedRooms = new ArrayList<>();
+    }
+
+    public void addBooking(BookedRoom reservation){
+        if (bookedRooms == null){
+            bookedRooms = new ArrayList<>();
+        }
+        bookedRooms.add(reservation);
+        reservation.setRoom(this);
+        available = true;
     }
 }
+
