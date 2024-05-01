@@ -21,6 +21,20 @@ public class CustomerHtlmController {
     private final CustomerServiceHtmlImpl customerServiceHtmlImpl;
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceHtmlImpl.class);
 
+    @GetMapping("approvedCreatedCustomer")
+    public String getApproved() {
+        return "customers/customerCreated";
+    }
+    @GetMapping("approvedUpdatedCustomer")
+    public String getDenied() {
+        return "customers/customerUpdated";
+    }
+    @GetMapping("alreadyBooked")
+    public String getalreadyBooked() {
+        return "customers/alreadyBooked";
+    }
+
+
 
     @GetMapping({"", "/"})
     public String getInfoCustomers(Model model) {

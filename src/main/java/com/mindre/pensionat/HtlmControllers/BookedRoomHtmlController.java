@@ -52,30 +52,43 @@ public class BookedRoomHtmlController {
         return "Bookings/CreateBooking";
     }
 
+    @GetMapping("approved")
+    public String getApproved() {
+        return "Bookings/approvedBooking";
+    }
+    @GetMapping("denied")
+    public String getDenied() {
+        return "Bookings/deniedBooking";
+    }
+    @GetMapping("alreadyBooked")
+    public String getalreadyBooked() {
+        return "Bookings/alreadyBooked";
+    }
+
     @PostMapping("/create")
     public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "redirect:/booking/deniedBooking";
+            return "Bookings/deniedBooking";
         }
         try {
             logger.info("Create booking method called.");
             RoomDto roomDto = detailedBookedRoomDto.getRoom();
             Room room = roomRepo.findById(roomDto.getId()).orElse(null);
 
-
+//KAREEMS METOD SOM SAMUEL TOG BORT
             if(room != null) {
                 room.setAvailable(false);
                 roomRepo.save(room);
             }else{
                 logger.error("Room not found" + roomDto.getId());
-                return "redirect:/booking/deniedBooking";
+                return "bookings/deniedBooking";
             }
             bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
         } catch (Exception e) {
-            System.out.println("Error..." + e.getMessage());
-            return "redirect:/booking/deniedBooking";
+            System.out.println("Error" + e.getMessage());
+            return "bookings/alreadyBooked";
         }
-        return "redirect:/booking/approvedBooking";
+        return "bookings/approvedBooking";
 
     }
     @GetMapping("/edit")
