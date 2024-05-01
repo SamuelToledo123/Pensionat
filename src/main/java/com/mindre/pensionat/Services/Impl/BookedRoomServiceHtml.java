@@ -30,10 +30,15 @@ public class BookedRoomServiceHtml {
 
         try {
 
+            Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
+                    .orElseThrow(() -> new RuntimeException("Room not found"));
+
             BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
             newBookedRoom.setCheckOut(detailedBookedRoomDto.getCheckOut());
             newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
+            newBookedRoom.setRoom(selectedRoom);
+
 
             if (!roomIsAvailable(detailedBookedRoomDto, bookedRoomRepo.findAll())) {
                 throw new RuntimeException("Room is not available for the specified dates.");
@@ -47,14 +52,7 @@ public class BookedRoomServiceHtml {
             customerRepo.save(newCustomer);
             logger.info("Saved customer with ID: {}", newCustomer.getId());
 
-            Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
-                    .orElseThrow(() -> new RuntimeException("Room not found"));
 
-            BookedRoom newBookedRoom = new BookedRoom();
-            newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
-            newBookedRoom.setCheckOut(detailedBookedRoomDto.getCheckOut());
-            newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
-            newBookedRoom.setRoom(selectedRoom);
             newBookedRoom.setCustomer(newCustomer);
             bookedRoomRepo.save(newBookedRoom);
         } catch (Exception e) {

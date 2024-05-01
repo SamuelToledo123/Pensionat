@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 public class DetailedBookedRoomDto {
 
-    private RoomDto room;
+
 
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -29,7 +29,7 @@ public class DetailedBookedRoomDto {
     private int amountPersons;
 
     private CustomerDto customer;
-     private RoomDto room;
+    private RoomDto room;
     public CustomerDto getCustomerDto() {
         return this.customer;
     }
