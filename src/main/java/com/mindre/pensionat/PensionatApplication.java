@@ -1,7 +1,9 @@
 package com.mindre.pensionat;
 
 import com.mindre.pensionat.Models.BookedRoom;
+import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Models.Room;
+import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 public class PensionatApplication {
     @Autowired
     private RoomRepo roomRepo;
+    @Autowired
+    private CustomerRepo customerRepo;
 
 
     public static void main(String[] args) {
@@ -34,7 +38,6 @@ public class PensionatApplication {
             roomRepo.save(doubleRoom1);
             roomRepo.save(doubleRoom2);
             roomRepo.save(doubleRoom3);
-
 
         };
     }

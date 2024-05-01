@@ -2,6 +2,7 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Models.Customer;
+import com.mindre.pensionat.Repo.BookedRoomRepo;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class CustomerServiceHtmlImpl {
 
     @Autowired
     private final CustomerRepo customerRepo;
+    private final BookedRoomRepo bookedRoomRepo;
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
 
@@ -43,6 +45,7 @@ public class CustomerServiceHtmlImpl {
     public String createCustomer(@Valid @ModelAttribute CustomerDto customerDto, BindingResult result) {
 
         if (result.hasErrors()) {
+            logger.error("Validation errors: {}", result.getAllErrors());
             return "customers/CreateCustomer";
         }
 
@@ -59,6 +62,8 @@ public class CustomerServiceHtmlImpl {
 
 
         } catch (Exception e) {
+            logger.error("Error occurred while creating the customer: {}", e.getMessage());
+
             System.out.println("Error occurred while creating the customer!" + e.getMessage());
         }
         return "redirect:/customers";
@@ -123,6 +128,11 @@ public class CustomerServiceHtmlImpl {
         try {
 
             Customer customer = customerRepo.findById(id).get();
+
+            if(bookedRoomRepo.existsByCustomerId(customer.getId())){
+                System.out.println("Can't delete customer, existing booking");
+                return "redirect:/customers";
+            }
             customerRepo.delete(customer);
             logger.info("Deleted customer with ID: {}" , customer.getId());
 
