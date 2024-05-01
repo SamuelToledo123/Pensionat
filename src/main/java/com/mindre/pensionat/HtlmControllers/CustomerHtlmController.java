@@ -1,25 +1,25 @@
 package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
-import com.mindre.pensionat.Dtos.DetailedCustomerDto;
+import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
+import com.mindre.pensionat.Services.Impl.CustomerServiceHtmlImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.mindre.pensionat.Services.Impl.CustomerServiceHtmlImpl;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customers")
 public class CustomerHtlmController {
 
-    @Autowired
+
     private final CustomerServiceHtmlImpl customerServiceHtmlImpl;
+    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceHtmlImpl.class);
 
 
     @GetMapping({"", "/"})
@@ -56,15 +56,6 @@ public class CustomerHtlmController {
     }
 }
 
-  /*  @GetMapping("/customers")
-    public String getAllCustomers(Model model) {
-        List<DetailedCustomerDto> customers = customerServiceHtmlImpl.getAllDetailedCustomers();
-        model.addAttribute("customers", customers);
-        return "customers/index";
-    }
-}
-
-   */
 
 
 

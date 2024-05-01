@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/form.css">
+</head>
+<body>
+
+<div class="bok-area">
+  <header>
+    <div class="wrapper">
+      <div class="logo">
+        <a href="#">Pensionat</a>
+      </div>
+      <nav>
+        <a href="/customers/create">New Customer</a>
+        <a href="/booking">All Reservations</a>
+        <a href="/customers">All Customers</a>
+        <a href="/booking/create">Reservation</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="container">
+      <h1 class="text-center my-4">Reservations</h1>
+
+      <a class="btn btn-primary" href="/booking/create">New reservation</a>
+
+      <table class="table">
+        <thead>
+        <tr>
+
+
+          <th>Room ID</th>
+          <th>Check-In</th>
+          <th>Check-Out</th>
+          <th>Total of people</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bookedRoom : ${bookedRooms}">
+          <td th:text="${bookedRoom.id}"></td>
+          <td th:text="${bookedRoom.checkIn}"></td>
+          <td th:text="${bookedRoom.checkOut}"></td>
+          <td th:text="${bookedRoom.amountPersons}"></td>
+
+
+          <td style="white-space: nowrap">
+            <a class="btn btn-primary btn-sm "
+               th:href="@{/booking/edit(id=${bookedRoom.id})}">Edit</a>
+            <a class="btn btn-danger btn-sm "
+               th:href="@{/booking/delete(id=${bookedRoom.id})}"
+               onclick="return confirm('Are you sure?')">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
