@@ -77,12 +77,12 @@ public class BookedRoomServiceHtml {
             customerRepo.save(newCustomer);
             logger.info("Saved customer with ID: {}", newCustomer.getId());
 
-            BookedRoom newBookedRoom = new BookedRoom();
+          /*  BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
             newBookedRoom.setCheckOut(detailedBookedRoomDto.getCheckOut());
             newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
             newBookedRoom.setCustomer(newCustomer);
-            bookedRoomRepo.save(newBookedRoom);
+            bookedRoomRepo.save(newBookedRoom);*/
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());
         }

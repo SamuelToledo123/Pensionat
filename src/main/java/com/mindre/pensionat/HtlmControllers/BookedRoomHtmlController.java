@@ -3,6 +3,7 @@ package com.mindre.pensionat.HtlmControllers;
 import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
+import com.mindre.pensionat.Dtos.RoomDto;
 import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.BookedRoomRepo;
