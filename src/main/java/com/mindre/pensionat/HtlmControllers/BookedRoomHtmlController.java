@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,6 +54,11 @@ public class BookedRoomHtmlController {
         List<DetailedBookedRoomDto> allBookings = bookedRoomServiceHtml.getAllDetailedBookedRoomDto();
         model.addAttribute("bookings", allBookings);
         return "bookings/editBookings";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable Long id) {
+        bookedRoomServiceHtml.deleteBooking(id);
+        return "redirect:/booking/edit";
     }
 
 }

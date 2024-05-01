@@ -35,6 +35,9 @@
                 <td th:text="${booking.amountPersons}"></td>
                 <td th:text="${booking.customer.firstName}"></td>
                 <td th:text="${booking.customer.lastName}"></td>
+                <td>
+                    <a th:href="@{/booking/delete/{id}(id=${booking.id})}" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
             </tbody>
         </table>

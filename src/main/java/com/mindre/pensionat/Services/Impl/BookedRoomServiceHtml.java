@@ -69,4 +69,7 @@ public class BookedRoomServiceHtml {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());
         }
     }
+    public void deleteBooking(Long id) {
+        bookedRoomRepo.deleteById(id);
+    }
 }
