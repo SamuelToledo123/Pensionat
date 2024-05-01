@@ -3,8 +3,10 @@ package com.mindre.pensionat.Services.Impl;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
+import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.BookedRoomRepo;
 import com.mindre.pensionat.Repo.CustomerRepo;
+import com.mindre.pensionat.Repo.RoomRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class BookedRoomServiceHtml {
     @Autowired
     private final CustomerRepo customerRepo;
     private final BookedRoomRepo bookedRoomRepo;
+    private final RoomRepo roomRepo;
     public void createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
 
         try {
@@ -31,11 +34,18 @@ public class BookedRoomServiceHtml {
             customerRepo.save(newCustomer);
             logger.info("Saved customer with ID: {}", newCustomer.getId());
 
+            Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
+                    .orElseThrow(() -> new RuntimeException("Room not found"));
+
             BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
             newBookedRoom.setCheckOut(detailedBookedRoomDto.getCheckOut());
             newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
+            newBookedRoom.setRoom(selectedRoom);
             newBookedRoom.setCustomer(newCustomer);
+
+
+
             bookedRoomRepo.save(newBookedRoom);
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());

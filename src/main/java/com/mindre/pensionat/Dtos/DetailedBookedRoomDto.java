@@ -26,9 +26,12 @@ public class DetailedBookedRoomDto {
     private int amountPersons;
 
     private CustomerDto customer;
-
+     private RoomDto room;
     public CustomerDto getCustomerDto() {
         return this.customer;
+    }
+    public Long getRoomId() {
+        return this.room.getId();
     }
 
 }

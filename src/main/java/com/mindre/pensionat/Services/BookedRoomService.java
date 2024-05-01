@@ -6,6 +6,7 @@ import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Dtos.DetailedCustomerDto;
 import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Customer;
+import com.mindre.pensionat.Models.Room;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,8 @@ public interface BookedRoomService {
     public String updateBookedRoom(@PathVariable Long id, @Valid @RequestBody BookedRoomDto bookedRoomDto);
 
     public String deleteBookedRoom(@PathVariable Long id);
+
+    public List<Room> getAllRooms();
 }
 
 

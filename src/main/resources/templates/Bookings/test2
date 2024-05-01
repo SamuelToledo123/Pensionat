@@ -28,86 +28,73 @@
             <div class="col-md-8 mx-auto rounded border p-4 m-4">
                 <h2 class="text-center mb-5">Make Reservation</h2>
 
-                <form th:action="@{/booking/create}" th:object="${booking}" method="post">
-
+                <form th:action="@{/booking/create}" th:object="${booking}" method="post" >
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label">Select Room</label>
+                        <label class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
-                            <select class="form-control" th:field="*{room.id}">
-                                <option value="">- Choose a room -</option>
-                                <option th:each="room : ${rooms}"
-                                        th:value="${room.id}"
-                                        th:text="${room.roomType} + ' - ' + ${room.roomSize} + ' beds'">Room</option>
-                            </select>
+                            <input class="form-control" th:field="${booking.customer.}">
+                            <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="text-danger"
+                               th:errors="${customer.FirstName}"></p>
+
                         </div>
                     </div>
-
-                    <div class="row mb-3">
-                            <label class="col-sm-4 col-form-label">First Name</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" th:field="*{customer.firstName}">
-                            </div>
-                       </div>
-
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Last Name</label>
                         <div class="col-sm-8">
-                            <input class="form-control" th:field="*{customer.lastName}">
+                            <input class="form-control" th:field="${customer.lastName}">
+                            <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="text-danger"
+                               th:errors="${customer.lastName}"></p>
                         </div>
                     </div>
+
 
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
-                            <input class="form-control" th:field="*{customer.email}">
+                            <input class="form-control" th:field="${customer.email}">
+                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger"
+                               th:errors="${customer.email}"></p>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Phone Number</label>
                         <div class="col-sm-8">
-                            <input class="form-control" th:field="*{customer.email}">
+                            <input  class="form-control" type="text" th:field="${customer.phoneNumber}">
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="text-danger"
+                               th:errors="${customer.phoneNumber}"></p>
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label">Persons</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" th:field="*{amountPersons}">
-                                <option value="1"> 1 </option>
-                                <option value="2"> 2 </option>
-                                <option value="3"> 3 </option>
-                                <option value="4"> 4 </option>
-                                </select>
-                        </div>
-                    </div>
+
 
 
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Check In</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" th:field="*{checkIn}">
+                            <input type="date" class="form-control" type="text" th:field="${checkIn}">
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="text-danger"
+                               th:errors="${checkIn}"></p>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label">Check Out</label>
+                        <label class="col-sm-4 col-form-label">Check In</label>
                         <div class="col-sm-8">
-                            <input type="date"  class="form-control" th:field="*{checkOut}">
+                            <input type="date" class="form-control" type="text" th:field="${checkOut}">
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="text-danger"
+                               th:errors="${checkOut}"></p>
                         </div>
                     </div>
-
-
-
 
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4 d-grid">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
+                        <div class="col-sm-4 d-grid">
+                            <a class="btn btn-primary" href="/customers" role="button">Cancel</a>
+                        </div>
                     </div>
-
-
-
                 </form>
             </div>
         </div>

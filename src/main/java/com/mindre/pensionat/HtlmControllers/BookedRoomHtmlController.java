@@ -2,8 +2,12 @@ package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
+import com.mindre.pensionat.Dtos.RoomDto;
+import com.mindre.pensionat.Models.Room;
+import com.mindre.pensionat.Repo.RoomRepo;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import jakarta.validation.Valid;
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.awt.*;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/booking")
@@ -23,14 +30,21 @@ public class BookedRoomHtmlController {
 
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
+    private final RoomRepo roomRepo;
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
+
         DetailedBookedRoomDto booking = new DetailedBookedRoomDto();
         booking.setCustomer(new CustomerDto()); // Initialize nested DTO
+        booking.setRoom(new RoomDto());
+
+        List<Room> rooms = roomRepo.findAll();
         model.addAttribute("booking", booking);
+        model.addAttribute("rooms", rooms);
+
         return "Bookings/CreateBooking";
     }
 
