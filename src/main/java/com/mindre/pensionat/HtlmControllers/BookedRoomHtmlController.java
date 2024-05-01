@@ -55,7 +55,7 @@ public class BookedRoomHtmlController {
     @PostMapping("/create")
     public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "Bookings/CreateBooking";
+            return "redirect:/booking/deniedBooking";
         }
         try {
             logger.info("Create booking method called.");
@@ -68,14 +68,14 @@ public class BookedRoomHtmlController {
                 roomRepo.save(room);
             }else{
                 logger.error("Room not found" + roomDto.getId());
-                return "Bookings/CreateBooking";
+                return "redirect:/booking/deniedBooking";
             }
             bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
         } catch (Exception e) {
             System.out.println("Error..." + e.getMessage());
-            return "Bookings/CreateBooking";
+            return "redirect:/booking/deniedBooking";
         }
-        return "redirect:Bookings/editBookings";
+        return "redirect:/booking/approvedBooking";
 
     }
     @GetMapping("/edit")
