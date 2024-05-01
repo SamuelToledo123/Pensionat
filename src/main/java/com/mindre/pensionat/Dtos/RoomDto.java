@@ -19,7 +19,7 @@ public class RoomDto {
     @NotEmpty(message = "roomType is required")
     private String roomType;
     @Min(0)
-    private int amountBeds;
+    private int amountOfBeds;
     @NotNull(message = "room size is required")
     private int roomSize;
 

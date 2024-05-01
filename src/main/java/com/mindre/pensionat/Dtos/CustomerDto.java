@@ -19,8 +19,7 @@ public class CustomerDto {
     private String firstName;
 
     @NotEmpty(message = "the Lastname is required")
-    @Size(min = 3)
-    @Size(max = 15)
+    @Size(min = 3, max = 15)
     private String lastName;
 
     @NotEmpty(message = "email is required")

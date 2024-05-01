@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @PutMapping("updateCustomer/{id}")
-    public String updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
+    public String updateCustomer(@PathVariable Long id, @Validated @RequestBody CustomerDto customerDto) {
 
             Customer updateCustomer = customerRepo.findById(id).get();
             updateCustomer.setFirstName(customerDto.getFirstName());

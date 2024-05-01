@@ -18,7 +18,6 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomType;
-    //private double price;
     private int roomSize;
     private int amountOfBeds;
     private boolean available = true;

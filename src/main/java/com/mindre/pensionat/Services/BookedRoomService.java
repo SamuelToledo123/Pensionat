@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 
 //konto
@@ -28,6 +29,10 @@ public interface BookedRoomService {
     public String deleteBookedRoom(@PathVariable Long id);
 
     public List<Room> getAllRooms();
+
+
+
+
 }
 
 

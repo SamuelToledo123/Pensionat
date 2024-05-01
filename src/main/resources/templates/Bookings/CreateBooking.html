@@ -16,7 +16,7 @@
                 <a href="#">Pensionat</a>
             </div>
             <nav>
-                <a href="/customers/create">New Customer</a>
+                <a href="/customers/create">New Reservation</a>
                 <a href="#">Rooms</a>
                 <a href="/customers">All Customers</a>
                 <a href="#">Kontakt</a>
@@ -37,7 +37,7 @@
                                 <option value="">- Choose a room -</option>
                                 <option th:each="room : ${rooms}"
                                         th:value="${room.id}"
-                                        th:text="${room.roomType} + ' - ' + ${room.roomSize} + ' beds'">Room</option>
+                                        th:text="${room.roomType} + ' - ' + ${room.amountOfBeds}">Room</option>
                             </select>
                         </div>
                     </div>
@@ -59,14 +59,15 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
-                            <input class="form-control" th:field="*{customer.email}">
+                            <input class="form-control" th:field="*{customer.email}"
+                            >
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Phone Number</label>
                         <div class="col-sm-8">
-                            <input class="form-control" th:field="*{customer.email}">
+                            <input class="form-control" th:field="*{customer.phoneNumber}">
                         </div>
                     </div>
 
@@ -96,9 +97,6 @@
                             <input type="date"  class="form-control" th:field="*{checkOut}">
                         </div>
                     </div>
-
-
-
 
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4 d-grid">
