@@ -74,8 +74,7 @@ public class BookedRoomServiceHtml {
             newCustomer.setLastName(detailedBookedRoomDto.getCustomerDto().getLastName());
             newCustomer.setEmail(detailedBookedRoomDto.getCustomerDto().getEmail());
             newCustomer.setPhoneNumber(detailedBookedRoomDto.getCustomerDto().getPhoneNumber());
-            customerRepo.save(newCustomer);
-            logger.info("Saved customer with ID: {}", newCustomer.getId());
+
 
           /*  BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
@@ -83,6 +82,12 @@ public class BookedRoomServiceHtml {
             newBookedRoom.setAmountPersons(detailedBookedRoomDto.getAmountPersons());
             newBookedRoom.setCustomer(newCustomer);
             bookedRoomRepo.save(newBookedRoom);*/
+
+            customerRepo.save(newCustomer);
+            logger.info("Saved customer with ID: {}", newCustomer.getId());
+            newBookedRoom.setCustomer(newCustomer);
+            bookedRoomRepo.save(newBookedRoom);
+
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());
         }
