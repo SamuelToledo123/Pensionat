@@ -4,6 +4,18 @@
     <title>Edit Booking</title>
 </head>
 <body>
+<header>
+    <div class="wrapper">
+        <div class="logo">
+            <a href="/index.html">Pensionat</a>
+        </div>
+        <nav>
+            <a href="/booking/create">New Reservation</a>
+            <a href="/customers">All Customers</a>
+            <a href="/booking/edit">All bookings</a>
+        </nav>
+    </div>
+</header>
 <h1>Edit Booking</h1>
 <form th:action="@{/booking/editBooking/{id}(id=${bookingDto.id})}" th:object="${bookingDto}" method="post">
     Check-In Date: <input type="date" th:field="*{checkIn}" />

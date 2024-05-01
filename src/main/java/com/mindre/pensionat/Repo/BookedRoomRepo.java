@@ -9,5 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface BookedRoomRepo extends JpaRepository<BookedRoom, Long> {
-
+    boolean existsByCustomerId(Long customerId);
 }

@@ -17,8 +17,6 @@ import java.util.List;
 @Entity
 public class Customer {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,13 +25,7 @@ public class Customer {
     private String email;
     private String phoneNumber;
 
-
     @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRoom;
-
-
-
-
-
 
 }
