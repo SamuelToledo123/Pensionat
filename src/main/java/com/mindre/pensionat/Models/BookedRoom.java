@@ -20,7 +20,7 @@ public class BookedRoom {
     private Date checkIn;
     private Date checkOut;
     private int amountPersons;
-    private boolean available = false;
+    private boolean available;
 
 
     //one to many
