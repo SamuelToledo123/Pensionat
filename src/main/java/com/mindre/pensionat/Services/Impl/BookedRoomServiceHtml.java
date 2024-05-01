@@ -114,7 +114,7 @@ public class BookedRoomServiceHtml {
     }
 
 
-    public String checkReservation(Long roomId, BookedRoom bookingRequest) {
+    public void checkReservation(Long roomId, BookedRoom bookingRequest) {
 
 
         if (bookingRequest.getCheckOut().before(bookingRequest.getCheckIn())) {
@@ -124,7 +124,6 @@ public class BookedRoomServiceHtml {
         List<BookedRoom> existingBookings = room.getBookedRooms();
             room.addBooking(bookingRequest);
 
-        return "HYPE";
     }
 
     public BookedRoom findByID(Long id) {
