@@ -1,7 +1,12 @@
 package com.mindre.pensionat.HtlmControllers;
 
+import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
+import com.mindre.pensionat.Models.BookedRoom;
+import com.mindre.pensionat.Models.Room;
+import com.mindre.pensionat.Repo.BookedRoomRepo;
+import com.mindre.pensionat.Repo.RoomRepo;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,8 @@ public class BookedRoomHtmlController {
 
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
+    private final RoomRepo roomRepo;
+    private final BookedRoomRepo bookedRoomRepo;
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
@@ -58,6 +65,18 @@ public class BookedRoomHtmlController {
     @GetMapping("/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
         bookedRoomServiceHtml.deleteBooking(id);
+        return "redirect:/booking/edit";
+    }
+    @GetMapping("/editBooking/{id}")
+    public String showEditBookingForm(@PathVariable Long id, Model model) {
+        BookedRoomDto bookedRoomDto = bookedRoomServiceHtml.getBookedRoomDtoById(id);
+        model.addAttribute("bookingDto", bookedRoomDto);
+        return "Bookings/editBookingForm";
+    }
+
+    @PostMapping("/editBooking/{id}")
+    public String updateBooking(@PathVariable Long id, @ModelAttribute("bookingDto") BookedRoomDto bookedRoomDto) {
+        bookedRoomServiceHtml.updateBookedRoom(id, bookedRoomDto);
         return "redirect:/booking/edit";
     }
 

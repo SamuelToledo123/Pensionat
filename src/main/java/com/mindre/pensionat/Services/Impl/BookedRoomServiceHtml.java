@@ -72,4 +72,18 @@ public class BookedRoomServiceHtml {
     public void deleteBooking(Long id) {
         bookedRoomRepo.deleteById(id);
     }
+    public BookedRoomDto bookedRoomtoBookedRoomDto(BookedRoom b) {
+        return BookedRoomDto.builder().id(b.getId()).amountPersons(b.getAmountPersons()).build();
+    }
+    public BookedRoomDto getBookedRoomDtoById(Long id) {
+        return bookedRoomRepo.findById(id)
+                .map(this::bookedRoomtoBookedRoomDto)
+                .orElseThrow(() -> new IllegalArgumentException("Wrong id: " + id));
+    }
+    public void updateBookedRoom(Long id, BookedRoomDto bookedRoomDto) {
+        BookedRoom bookedRoom = bookedRoomRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("wrong booking Id:" + id));
+        bookedRoom.setCheckIn(bookedRoomDto.getCheckIn());
+        bookedRoom.setCheckOut(bookedRoomDto.getCheckOut());
+        bookedRoomRepo.save(bookedRoom);
+    }
 }
