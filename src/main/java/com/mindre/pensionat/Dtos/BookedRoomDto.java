@@ -23,5 +23,5 @@ public class BookedRoomDto {
     @Min(0)
     private int amountPersons;
 
-    //konto
+
 }
