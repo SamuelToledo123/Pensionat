@@ -36,9 +36,6 @@ public class FetchContractCustomers implements CommandLineRunner {
                     AllContractCustomers.class);
 
             for (ContractCustomer c : allContractCustomers.customers) {
-                System.out.println(c.getId());
-                System.out.println(c.getContactName());
-
 
                 ContractCustomer contractCustomer = new ContractCustomer();
                 contractCustomer.setId(c.getId());
@@ -53,6 +50,7 @@ public class FetchContractCustomers implements CommandLineRunner {
                 contractCustomer.setFax(c.getFax());
 
                 repo.save(contractCustomer);
+                logger.info("Fetch successful!");
 
             }
         } catch (Exception e) {
