@@ -44,7 +44,7 @@ public class ShipperApplication implements CommandLineRunner {
 
 
         }
-    }catch (Exception e) {
+    } catch (Exception e) {
           logger.error("Fetching shippers error" + e);
       }
 
