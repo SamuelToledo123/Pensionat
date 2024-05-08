@@ -116,7 +116,6 @@ public class BookedRoomServiceHtml {
 
     public void checkReservation(Long roomId, BookedRoom bookingRequest) {
 
-
         if (bookingRequest.getCheckOut().before(bookingRequest.getCheckIn())) {
             throw new RuntimeException("Check-in date must come before check-out date");
         }

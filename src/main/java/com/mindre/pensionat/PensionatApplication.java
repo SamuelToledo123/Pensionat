@@ -1,7 +1,5 @@
 package com.mindre.pensionat;
 
-import com.mindre.pensionat.Models.BookedRoom;
-import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
