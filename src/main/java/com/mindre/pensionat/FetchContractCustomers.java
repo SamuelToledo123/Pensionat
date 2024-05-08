@@ -50,9 +50,10 @@ public class FetchContractCustomers implements CommandLineRunner {
                 contractCustomer.setFax(c.getFax());
 
                 repo.save(contractCustomer);
-                logger.info("Fetch successful!");
+
 
             }
+            logger.info("Fetch Contract-customer successful!");
         } catch (Exception e) {
             logger.error("Error while Fetching ContractCustomer" + e);
         }

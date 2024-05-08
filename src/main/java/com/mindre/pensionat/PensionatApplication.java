@@ -6,37 +6,31 @@ import com.mindre.pensionat.Repo.RoomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Objects;
+
 @SpringBootApplication
 public class PensionatApplication {
-    @Autowired
-    private RoomRepo roomRepo;
-    @Autowired
-    private CustomerRepo customerRepo;
 
 
     public static void main(String[] args) {
-        SpringApplication.run(PensionatApplication.class, args);
+            if (args.length == 0) {
+                SpringApplication.run(PensionatApplication.class, args);
+
+            }else if (Objects.equals(args[0],"fetchcustomers")){
+                SpringApplication application = new SpringApplication(FetchContractCustomers.class);
+                application.setWebApplicationType(WebApplicationType.NONE);
+                application.run(args);
+            }
+        }
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(){
-        return args -> {
 
-            Room singleRoom1 = new Room(1L, "Single Room", 1, 1, true);
-            Room singleRoom2 = new Room(2L, "Single Room", 1, 1, true);
-            Room doubleRoom1 = new Room(3L, "Double Room", 2, 1, true);
-            Room doubleRoom2 = new Room(4L, "Double Room Luxury", 3, 2, true);
-            Room doubleRoom3 = new Room(5L, "Double Room Luxury", 4, 2, true);
 
-            roomRepo.save(singleRoom1);
-            roomRepo.save(singleRoom2);
-            roomRepo.save(doubleRoom1);
-            roomRepo.save(doubleRoom2);
-            roomRepo.save(doubleRoom3);
 
-        };
-    }
-}
+
+
+

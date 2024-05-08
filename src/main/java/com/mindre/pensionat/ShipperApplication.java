@@ -40,10 +40,8 @@ public class ShipperApplication implements CommandLineRunner {
             shippers1.setPhone(shipper.getPhone());
 
             repo.save(shippers1);
-            logger.info("Fetched shipper was succesfull");
-
-
         }
+          logger.info("Fetched shipper was succesfull");
     } catch (Exception e) {
           logger.error("Fetching shippers error" + e);
       }
