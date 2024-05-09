@@ -1,17 +1,14 @@
 package com.mindre.pensionat.HtlmControllers;
 
+import com.mindre.pensionat.BlackList;
 import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Dtos.RoomDto;
-import com.mindre.pensionat.Models.BookedRoom;
 import com.mindre.pensionat.Models.Room;
-import com.mindre.pensionat.Repo.BookedRoomRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
-import com.mindre.pensionat.Services.Impl.BookedRoomServiceImpl;
 import jakarta.validation.Valid;
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import java.awt.*;
-import java.util.List;
-import java.util.Optional;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/booking")
@@ -35,6 +28,7 @@ public class BookedRoomHtmlController {
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
     private final RoomRepo roomRepo;
+    private final BlackList blackList = new BlackList();
 
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
@@ -75,7 +69,13 @@ public class BookedRoomHtmlController {
             RoomDto roomDto = detailedBookedRoomDto.getRoom();
             Room room = roomRepo.findById(roomDto.getId()).orElse(null);
 
-//KAREEMS METOD SOM SAMUEL TOG BORT
+            if (blackList.checkIfBlacklisted(detailedBookedRoomDto.getCustomerDto().getEmail())){
+
+                logger.error("Customer is blacklisted");
+            return "bookings/deniedBooking";
+        }
+
+        //KAREEMS METOD SOM SAMUEL TOG BORT
             if(room != null) {
                 room.setAvailable(false);
                 roomRepo.save(room);
