@@ -1,12 +1,13 @@
 package com.mindre.pensionat.HtlmControllers;
 
-import com.mindre.pensionat.BlackList;
+
 import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Dtos.RoomDto;
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.RoomRepo;
+import com.mindre.pensionat.Services.Impl.BlackListService;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class BookedRoomHtmlController {
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
     private final RoomRepo roomRepo;
-    private final BlackList blackList = new BlackList();
+    private final BlackListService blackList = new BlackListService();
 
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
@@ -68,8 +69,9 @@ public class BookedRoomHtmlController {
             logger.info("Create booking method called.");
             RoomDto roomDto = detailedBookedRoomDto.getRoom();
             Room room = roomRepo.findById(roomDto.getId()).orElse(null);
+            String email = detailedBookedRoomDto.getCustomerDto().getEmail();
 
-            if (blackList.checkIfBlacklisted(detailedBookedRoomDto.getCustomerDto().getEmail())){
+            if (blackList.checkIfBlacklisted(email)) {
 
                 logger.error("Customer is blacklisted");
             return "bookings/deniedBooking";
