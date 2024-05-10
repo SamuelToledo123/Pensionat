@@ -1,5 +1,8 @@
 package com.mindre.pensionat.Services.Impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindre.pensionat.Dtos.BookedRoomDto;
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
@@ -16,8 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,9 +62,37 @@ public class BookedRoomServiceHtml {
         }
     }
 
+
+    public CompletableFuture<Boolean> isEmailBlacklisted(String email) {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = String.format("https://javabl.systementor.se/api/MSK/blacklistcheck/%s", email);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(response -> {
+
+                    JsonNode rootNode = null;
+                    try {
+                        rootNode = new ObjectMapper().readTree(response.body());
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return rootNode.path("ok").asBoolean();
+                });
+    }
+
     public void createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
 
         try {
+            boolean emailBlacklisted = isEmailBlacklisted(detailedBookedRoomDto.getCustomerDto().getEmail()).join();
+            if (!emailBlacklisted) {
+                logger.info("inside emailblacklisted if sats");
+                throw new RuntimeException("Email is blacklisted.");
+            }
 
             Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
                     .orElseThrow(() -> new RuntimeException("Room not found"));
@@ -81,6 +118,7 @@ public class BookedRoomServiceHtml {
             newCustomer.setLastName(detailedBookedRoomDto.getCustomerDto().getLastName());
             newCustomer.setEmail(detailedBookedRoomDto.getCustomerDto().getEmail());
             newCustomer.setPhoneNumber(detailedBookedRoomDto.getCustomerDto().getPhoneNumber());
+
 
             customerRepo.save(newCustomer);
             logger.info("Saved customer with ID: {}", newCustomer.getId());
