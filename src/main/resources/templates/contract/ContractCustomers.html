@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/form.css">
+</head>
+<body>
+
+<div class="bok-area">
+    <header>
+        <div class="wrapper">
+            <div class="logo">
+                <a href="/index.html">Pensionat</a>
+            </div>
+            <nav>
+                <a href="/booking/create">New Reservation</a>
+                <a href="/customers">All Customers</a>
+                <a href="/booking/edit">All bookings</a>
+            </nav>
+        </div>
+    </header>
+
+<h1>Contract Customers</h1>
+<table class="content-table">
+    <thead>
+    <tr>
+
+        <th>ID</th>
+        <th>Company</th>
+        <th>Contact</th>
+        <th>Contact-Title</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Postal Code</th>
+        <th>Country</th>
+        <th>Phone</th>
+        <th>Fax</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="contractCustomer : ${contractCustomers}">
+        <td th:text="${contractCustomer.id}"></td>
+        <td th:text="${contractCustomer.companyName}"></td>
+        <td th:text="${contractCustomer.contactName}"></td>
+        <td th:text="${contractCustomer.contactTitle}"></td>
+        <td th:text="${contractCustomer.streetAddress}"></td>
+        <td th:text="${contractCustomer.city}"></td>
+        <td th:text="${contractCustomer.postalCode}"></td>
+        <td th:text="${contractCustomer.country}"></td>
+        <td th:text="${contractCustomer.phone}"></td>
+        <td th:text="${contractCustomer.fax}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
