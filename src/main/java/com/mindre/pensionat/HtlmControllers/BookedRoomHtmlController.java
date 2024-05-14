@@ -46,7 +46,6 @@ public class BookedRoomHtmlController {
 
         return "Bookings/CreateBooking";
     }
-
     @GetMapping("approved")
     public String getApproved() {
         return "Bookings/approvedBooking";
@@ -59,7 +58,6 @@ public class BookedRoomHtmlController {
     public String getalreadyBooked() {
         return "Bookings/alreadyBooked";
     }
-
     @PostMapping("/create")
     public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
         if (result.hasErrors()) {
@@ -77,7 +75,7 @@ public class BookedRoomHtmlController {
             return "bookings/deniedBooking";
         }
 
-        //KAREEMS METOD SOM SAMUEL TOG BORT
+        //FUNKAR INTE FÖR TILLFÄLLET
             if(room != null) {
                 room.setAvailable(false);
                 roomRepo.save(room);
