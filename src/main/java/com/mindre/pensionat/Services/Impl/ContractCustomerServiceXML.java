@@ -19,7 +19,7 @@ public class ContractCustomerServiceXML {
     XmlStreamProvider xmlStreamProvider;
 
     @Autowired
-    ContractCustomerServiceXML(XmlStreamProvider xmlStreamProvider) {
+    public ContractCustomerServiceXML(XmlStreamProvider xmlStreamProvider) {
         this.xmlStreamProvider = xmlStreamProvider;
     }
 

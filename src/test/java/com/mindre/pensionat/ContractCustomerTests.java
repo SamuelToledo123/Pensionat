@@ -1,5 +1,7 @@
 package com.mindre.pensionat;
 
+import com.mindre.pensionat.Models.ContractCustomer;
+import com.mindre.pensionat.Services.Impl.ContractCustomerServiceXML;
 import com.mindre.pensionat.Services.XmlStreamProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,37 +9,39 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 public class ContractCustomerTests {
     private XmlStreamProvider xmlStreamProvider = mock(XmlStreamProvider.class);
-    BookService sut;
+    ContractCustomerServiceXML sut;
 
     @BeforeEach()
     void setUp() {
-        sut = new (xmlStreamProvider);
+        sut = new ContractCustomerServiceXML (xmlStreamProvider);
 
     }
 
     @Test
     void whenGetBooksShouldMapCorrectly() throws IOException {
-        // Arrange
-        when(xmlStreamProvider.getDataStream()).thenReturn(getClass().getClassLoader().getResourceAsStream("books.xml"));
 
-        // Act
-        List<book> result = sut.GetBooks();
+       //VÄLJER VILKEN XML FIL SOM SKA TESTAS
+        when(xmlStreamProvider.getDataStream()).thenReturn(getClass().getClassLoader().getResourceAsStream("contractcustomers.xml"));
 
-        //Assert
+        //HÄMTAR CUSTOMERLISTAN
+        List<ContractCustomer> result = sut.getContractCustomers();
+
+       //KÖR TESTERNA NEDAN
         assertEquals(3, result.size() );
-        assertEquals("Stefan 1", result.get(0).author );
-        assertEquals("XML Developer's Guide", result.get(0).title );
-        assertEquals("Computer", result.get(0).category );
+        assertEquals("60843", result.get(0).getPostalCode() );
+        assertEquals("Sverige", result.get(0).getCountry());
+        assertEquals("Kramland", result.get(0).getCity() );
 
     }
 
 }
 
 
-}
+
