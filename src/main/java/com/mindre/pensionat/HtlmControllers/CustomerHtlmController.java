@@ -1,6 +1,7 @@
 package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
+import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import com.mindre.pensionat.Services.Impl.CustomerServiceHtmlImpl;
 import jakarta.validation.Valid;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

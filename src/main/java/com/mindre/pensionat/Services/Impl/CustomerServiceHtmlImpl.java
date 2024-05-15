@@ -1,8 +1,10 @@
 package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
+import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.BookedRoomRepo;
+import com.mindre.pensionat.Repo.ContractCustomerRepo;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class CustomerServiceHtmlImpl {
     @Autowired
     private final CustomerRepo customerRepo;
     private final BookedRoomRepo bookedRoomRepo;
+    private final ContractCustomerRepo contractCustomerRepo;
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
 
