@@ -1,6 +1,7 @@
 package com.mindre.pensionat;
 
 import com.mindre.pensionat.Models.ContractCustomer;
+import com.mindre.pensionat.Repo.ContractCustomerRepo;
 import com.mindre.pensionat.Services.Impl.ContractCustomerServiceXML;
 import com.mindre.pensionat.Services.XmlStreamProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,16 +15,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
+
 public class ContractCustomerTests {
     private XmlStreamProvider xmlStreamProvider = mock(XmlStreamProvider.class);
+    private ContractCustomerRepo contractCustomerRepo = mock(ContractCustomerRepo.class);
     ContractCustomerServiceXML sut;
 
     @BeforeEach()
     void setUp() {
-        sut = new ContractCustomerServiceXML (xmlStreamProvider);
+        sut = new ContractCustomerServiceXML (xmlStreamProvider, contractCustomerRepo);
+
 
     }
 
+
+    //WORKING
     @Test
     void whenGetBooksShouldMapCorrectly() throws IOException {
 

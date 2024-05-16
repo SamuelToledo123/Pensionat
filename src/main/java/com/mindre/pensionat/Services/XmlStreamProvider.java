@@ -8,8 +8,10 @@ import java.net.URL;
 
 @Service
 public class XmlStreamProvider {
+
+    String path = "https://javaintegration.systementor.se/customers";
     public InputStream getDataStream() throws IOException {
-        URL url = new URL("https://axmjqhyyjpat.objectstorage.eu-amsterdam-1.oci.customer-oci.com/n/axmjqhyyjpat/b/aspcodeprod/o/books.xml");
+        URL url = new URL(path);
         return  url.openStream();
     }
 
