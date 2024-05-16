@@ -1,5 +1,6 @@
 package com.mindre.pensionat.Dtos;
 
+import com.mindre.pensionat.Models.Event;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,8 @@ public class RoomDto {
     private int amountOfBeds;
     @NotNull(message = "room size is required")
     private int roomSize;
+
+    private Event event;
 
 
 }

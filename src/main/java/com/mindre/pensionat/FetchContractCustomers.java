@@ -6,13 +6,11 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.mindre.pensionat.Models.AllContractCustomers;
 import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Repo.ContractCustomerRepo;
-import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 
 import java.net.URL;
 

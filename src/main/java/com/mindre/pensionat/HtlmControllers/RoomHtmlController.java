@@ -1,28 +1,43 @@
 package com.mindre.pensionat.HtlmControllers;
 
-import ch.qos.logback.core.model.Model;
-import com.mindre.pensionat.Models.BookedRoom;
-import com.mindre.pensionat.Models.Room;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mindre.pensionat.Dtos.RoomDto;
+import com.mindre.pensionat.Services.Impl.RoomServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.awt.*;
+import java.util.List;
 
-//@Controller
-//public class RoomHtmlController {
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/rooms")
+public class RoomHtmlController {
 
-   // @Autowired
-   // private RoomServiceHtml roomService;
-
-    //@GetMapping("/book-room")
-   // public String showRoomForm(Model model) {
-      //  List<Room> rooms = roomService.getAllRooms();
-     //   model.addAttribute("rooms", rooms);
-     //   model.addAttribute("booking", new BookedRoom());
-     //   return "book-room-form";
- //   }
+    private final RoomServiceImpl roomService;
 
 
-//}
+    @GetMapping({"", "/"})
+    public String findAllRooms(Model model) {
+        List<RoomDto> rooms = roomService.findAllRooms();
+        model.addAttribute("rooms", rooms);
+        return "rooms/index";
+
+    }
+
+    @GetMapping("/info/{id}")
+    public String findEventRooms(@PathVariable Long id, Model model) {
+        RoomDto room = roomService.findRoomById(id);
+        model.addAttribute("room", room);
+        return "rooms/status";
+    }
+}
+
+
+
+
+
+
+

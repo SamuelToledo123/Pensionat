@@ -24,46 +24,40 @@
         </div>
     </header>
 
-<div class="content">
-    <div class="container">
-        <h1 class="text-center my-4">Customers</h1>
+    <div class="content">
+        <div class="container">
+            <h1 class="text-center my-4">Rooms</h1>
 
-        <a class="btn btn-primary" href="/customers/create">New Customer</a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room Type</th>
+                    <th>Room Size</th>
+                    <th>Amount of Beds</th>
+                    <th>Action</th>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone-number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.id}"></td>
+                    <td th:text="${room.roomType}"></td>
+                    <td th:text="${room.roomSize}"></td>
+                    <td th:text="${room.amountOfBeds}"></td>
+                    <!--<td th:text="${room.av}"></td>-->
 
-
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="customer : ${customers}">
-                <td th:text="${customer.id}"></td>
-                <td th:text="${customer.firstName}"></td>
-                <td th:text="${customer.lastName}"></td>
-                <td th:text="${customer.email}"></td>
-                <td th:text="${customer.phoneNumber}"></td>
-
-
-                <td style="white-space: nowrap">
-                    <a class="btn btn-primary btn-sm "
-                       th:href="@{/customers/edit(id=${customer.id})}">Edit</a>
-                    <a class="btn btn-danger btn-sm "
+                    <td style="white-space: nowrap">
+                        <a class="btn btn-primary btn-sm" th:href="@{/rooms/info/{id}(id=${room.id})}">Status</a>
+                    </td>
+                    <!--<a class="btn btn-danger btn-sm "
                        th:href="@{/customers/delete(id=${customer.id})}"
-                       onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                       onclick="return confirm('Are you sure?')">Delete</a>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
