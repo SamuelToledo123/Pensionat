@@ -18,5 +18,4 @@ public class ContractCustomerController {
     public String getContractCustomers(Model model) {
         return service.getContractCustomers(model);
     }
-
 }

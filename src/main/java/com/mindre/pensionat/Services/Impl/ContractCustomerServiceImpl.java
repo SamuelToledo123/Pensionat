@@ -15,8 +15,7 @@ public class ContractCustomerServiceImpl {
 
     public String getContractCustomers(Model model) {
         List<com.mindre.pensionat.Models.ContractCustomer> contractCustomers = repo.findAll();
-        model.addAttribute("contractCustomers",contractCustomers);
+        model.addAttribute("contractCustomers", contractCustomers);
         return "contract/ContractCustomers";
     }
-
 }

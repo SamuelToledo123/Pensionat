@@ -114,7 +114,7 @@ select:required:invalid {
 }
 
 .content-table thead tr {
-    background-color: #262626;
+    background-color: rgb(128, 128, 128);
     color: white;
     text-align: left;
     font-weight: bold;
