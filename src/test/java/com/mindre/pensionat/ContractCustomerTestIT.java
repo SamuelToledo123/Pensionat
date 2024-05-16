@@ -81,6 +81,4 @@ class ContractCustomerTestIT {
         //Assert
         assertEquals(3,contractCustomerRepo.count());
     }
-
-
 }

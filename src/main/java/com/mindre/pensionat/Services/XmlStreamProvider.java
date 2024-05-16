@@ -14,5 +14,4 @@ public class XmlStreamProvider {
         URL url = new URL(path);
         return  url.openStream();
     }
-
 }
