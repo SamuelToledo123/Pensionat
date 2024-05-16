@@ -31,7 +31,7 @@ public class ContractCustomerTests {
 
     //WORKING
     @Test
-    void whenGetBooksShouldMapCorrectly() throws IOException {
+    void whenGetCustomersShouldMapCorrectly() throws IOException {
 
        //VÄLJER VILKEN XML FIL SOM SKA TESTAS
         when(xmlStreamProvider.getDataStream()).thenReturn(getClass().getClassLoader().getResourceAsStream("contractcustomers.xml"));

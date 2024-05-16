@@ -2,12 +2,10 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mindre.pensionat.Models.BlacklistModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -36,6 +34,7 @@ public class BlackListService {
                 JsonNode jsonNode = objectMapper.readTree(jsonResponse);
                 boolean isBlacklisted = jsonNode.get("ok").asBoolean();
                 return !isBlacklisted;
+
         } catch (Exception e) {
             System.err.println("Request failed: " + e.getMessage());
         }

@@ -3,11 +3,15 @@ package com.mindre.pensionat;
 import com.mindre.pensionat.Repo.ContractCustomerRepo;
 import com.mindre.pensionat.Services.Impl.ContractCustomerServiceXML;
 import com.mindre.pensionat.Services.XmlStreamProvider;
+import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 
 
 import java.io.IOException;
@@ -25,7 +29,6 @@ class ContractCustomerTestIT {
     ContractCustomerRepo contractCustomerRepo;
     @Autowired
     XmlStreamProvider xmlStreamProvider;
-
     @Autowired
     ContractCustomerServiceXML sut;
 
