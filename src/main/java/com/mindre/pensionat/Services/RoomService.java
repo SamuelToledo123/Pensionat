@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface RoomService {
 
-    public List<RoomDto> findAllRooms(Model model);
+    public RoomDto findRoomById(Long id);
+
+    public List<RoomDto> findAllRooms();
 
     public RoomDto roomToRoomDto (Room room);
 }

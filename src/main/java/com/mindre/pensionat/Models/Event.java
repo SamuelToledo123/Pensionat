@@ -1,15 +1,13 @@
 package com.mindre.pensionat.Models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -21,11 +19,14 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDate openedDoor;
-    private LocalDate closedDoor;
-    private LocalDate cleanStart;
-    private LocalDate cleanEnd;
     private String employee;
+
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime openedDoor;
+    private LocalDateTime closedDoor;
+    private LocalDateTime cleanStart;
+    private LocalDateTime cleanEnd;
+
 
 
 }

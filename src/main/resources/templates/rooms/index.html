@@ -48,12 +48,11 @@
                     <!--<td th:text="${room.av}"></td>-->
 
                     <td style="white-space: nowrap">
-                        <a class="btn btn-primary btn-sm "
-                           href="/rooms/info">Status</a>
-                        <!--<a class="btn btn-danger btn-sm "
-                           th:href="@{/customers/delete(id=${customer.id})}"
-                           onclick="return confirm('Are you sure?')">Delete</a>-->
+                        <a class="btn btn-primary btn-sm" th:href="@{/rooms/info/{id}(id=${room.id})}">Status</a>
                     </td>
+                    <!--<a class="btn btn-danger btn-sm "
+                       th:href="@{/customers/delete(id=${customer.id})}"
+                       onclick="return confirm('Are you sure?')">Delete</a>-->
                 </tr>
                 </tbody>
             </table>

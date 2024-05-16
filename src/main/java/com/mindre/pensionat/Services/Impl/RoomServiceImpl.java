@@ -18,8 +18,15 @@ public class RoomServiceImpl implements RoomService {
 
     @Autowired
     private final RoomRepo repo;
+
     @Override
-    public List<RoomDto> findAllRooms(Model model) {
+    public RoomDto findRoomById(Long id) {
+        Room room = repo.findById(id).orElseThrow(()-> new RuntimeException("Room not found"));
+        return roomToRoomDto(room);
+    }
+
+    @Override
+    public List<RoomDto> findAllRooms() {
         return repo.findAll().stream().map(room -> roomToRoomDto(room)).toList();
 
     }
@@ -32,10 +39,10 @@ public class RoomServiceImpl implements RoomService {
                 .id(room.getId())
                 .roomType(room.getRoomType())
                 .roomSize(room.getRoomSize())
-                .amountOfBeds(room.getAmountOfBeds()).build();
-               /* .event(new Event(event.getId(), event.getOpenedDoor(),
+                .amountOfBeds(room.getAmountOfBeds())
+                .event(new Event(event.getId(), event.getEmployee(),
                         event.getClosedDoor(), event.getCleanStart(),
-                        event.getCleanEnd(),event.getEmployee())).build();*/
+                        event.getCleanEnd(),event.getOpenedDoor())).build();
 
     }
 

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -20,15 +21,15 @@ public class RoomHtmlController {
 
     @GetMapping({"", "/"})
     public String findAllRooms(Model model) {
-        List<RoomDto> rooms = roomService.findAllRooms(model);
+        List<RoomDto> rooms = roomService.findAllRooms();
         model.addAttribute("rooms", rooms);
         return "rooms/index";
 
     }
 
-    @GetMapping("/info")
-    public String findEventRooms(Model model) {
-        List<RoomDto> room = roomService.findAllRooms(model);
+    @GetMapping("/info/{id}")
+    public String findEventRooms(@PathVariable Long id, Model model) {
+        RoomDto room = roomService.findRoomById(id);
         model.addAttribute("room", room);
         return "rooms/status";
     }

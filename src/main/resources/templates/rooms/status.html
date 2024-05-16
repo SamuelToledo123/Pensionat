@@ -26,7 +26,7 @@
 
     <div class="content">
         <div class="container">
-            <h1 class="text-center my-4">Rooms</h1>
+            <h1 class="text-center my-4">Room</h1>
 
             <table class="table">
                 <thead>
@@ -41,14 +41,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="room : ${rooms}">
+                <tr>
                     <td th:text="${room.id}"></td>
-                    <td th:text="${room.event != null ? room.event.id : 'N/A'}"></td>
-                    <td th:text="${room.event != null ? room.event.openedDoor : 'N/A'}"></td>
-                    <td th:text="${room.event != null ? room.event.closedDoor : 'N/A'}"></td>
-                    <td th:text="${room.event != null ? room.event.cleanStart : 'N/A'}"></td>
-                    <td th:text="${room.event != null ? room.event.cleanEnd : 'N/A'}"></td>
-                    <td th:text="${room.event != null ? room.event.employee : 'N/A'}"></td>
+                    <td th:text="${room.event.id}"></td>
+                    <td th:text="${room.event.openedDoor}"></td>
+                    <td th:text="${room.event.getClosedDoor()}"></td>
+                    <td th:text="${room.event.cleanStart}"></td>
+                    <td th:text="${room.event.cleanEnd}"></td>
+                    <td th:text="${room.event.employee}"></td>
                 </tr>
                 </tbody>
             </table>
