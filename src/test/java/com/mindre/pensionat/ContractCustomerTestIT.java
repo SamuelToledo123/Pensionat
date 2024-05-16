@@ -40,8 +40,6 @@ class ContractCustomerTestIT {
         assertTrue(result.contains("</allcustomers>"));
         assertTrue(result.contains("<customers>"));
         assertTrue(result.contains("</customers>"));
-
-        // Asserts for customer details tags
         assertTrue(result.contains("<id>"));
         assertTrue(result.contains("</id>"));
         assertTrue(result.contains("<companyName>"));
