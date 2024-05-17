@@ -25,8 +25,6 @@ import java.util.List;
 
 public class roomEventController {
 
-
-
     private final RoomRepo roomRepo;
     private static final Logger logger = LoggerFactory.getLogger(roomEventController.class);
 
