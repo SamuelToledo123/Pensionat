@@ -103,10 +103,10 @@ select:required:invalid {
 }
 
 .content-table {
-    border-collapse: collapse;
-    margin: 65px 0;
+    border-collapse: separate;
+    margin: 65px 150px;
     font-size: 1.5rem;
-    min-width: 400px;
+    min-width: 1500px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -125,7 +125,7 @@ select:required:invalid {
 .content-table th,
 .content-table td {
     text-align: left;
-    padding: 12px 15px;
+    padding: 30px 15px;
 
 
 }
