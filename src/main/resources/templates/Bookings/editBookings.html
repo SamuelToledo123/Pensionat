@@ -44,8 +44,8 @@
             <tbody>
             <tr th:each="booking : ${bookings}">
                 <td th:text="${booking.id}"></td>
-                <td th:text="${#dates.format(booking.checkIn, 'yyyy-MM-dd')}"></td>
-                <td th:text="${#dates.format(booking.checkOut, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(booking.checkIn, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(booking.checkOut, 'yyyy-MM-dd')}"></td>
                 <td th:text="${booking.amountPersons}"></td>
                 <td th:text="${booking.customer.firstName}"></td>
                 <td th:text="${booking.customer.lastName}"></td>
