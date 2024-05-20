@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -24,5 +27,12 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRoom;
+
+
+    String my = String.valueOf(1);
+
+    String myString = Integer.valueOf("1").toString();
+
+
 
 }

@@ -26,25 +26,25 @@
 
     <div class="content">
         <div class="container">
-            <h1 class="text-center my-4">Rooms</h1>
+            <h1 class="text-center my-4">Events</h1>
 
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Room ID</th>
-                    <th>Room Name</th>
+                    <th>Typ</th>
+                    <th>Anställd</th>
+                    <th>Tid</th>
+
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="room : ${rooms}">
-                    <td th:text="${room.id}"></td>
-                    <td th:text="${room.roomType}"></td>
+                <tr th:each="event : ${events}">
+                    <td th:text="${event.eventType}"></td>
+                    <td th:text="${event.employee}"></td>
+                    <td th:text="${event.timeOfEvent}"></td>
 
-                    <td>
-                        <a th:href="@{/seeEvent(roomId=${room.id})}" class="btn btn-primary">See Events</a>
 
-                    </td>
 
 
                 </tr>

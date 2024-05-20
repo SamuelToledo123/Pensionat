@@ -3,7 +3,9 @@ package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.DetailedBookedRoomDto;
 import com.mindre.pensionat.Dtos.RoomDto;
+import com.mindre.pensionat.Models.Event;
 import com.mindre.pensionat.Models.Room;
+import com.mindre.pensionat.Repo.RoomEventRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import jakarta.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,6 +29,7 @@ import java.util.List;
 public class roomEventController {
 
     private final RoomRepo roomRepo;
+    private final RoomEventRepo roomEventRepo;
     private static final Logger logger = LoggerFactory.getLogger(roomEventController.class);
 
     @GetMapping("/events")
@@ -35,4 +39,10 @@ public class roomEventController {
         return "Events/RoomEvent";
     }
 
+    @GetMapping("/seeEvent")
+    public String showRoomEvent(@RequestParam Long roomId, Model model) {
+        List<Event> events = roomEventRepo.findByRoomId(roomId);
+        model.addAttribute("events", events);
+        return "Events/seeEvent";
+    }
     }

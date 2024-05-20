@@ -54,6 +54,7 @@ public class Room {
         }
         events.add(event);
         event.setRoom(this);
+        
     }
 
 }
