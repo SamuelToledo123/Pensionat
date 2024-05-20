@@ -21,6 +21,7 @@ public class Room {
     private int roomSize;
     private int amountOfBeds;
     private boolean available = false;
+    private double pricePerNight;
 
 
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)

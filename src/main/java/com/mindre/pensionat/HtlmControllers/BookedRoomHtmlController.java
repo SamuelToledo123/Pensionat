@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -59,7 +60,7 @@ public class BookedRoomHtmlController {
         return "Bookings/alreadyBooked";
     }
     @PostMapping("/create")
-    public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result) {
+    public String createBooking(@ModelAttribute("booking") @Valid DetailedBookedRoomDto detailedBookedRoomDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "Bookings/deniedBooking";
         }
@@ -83,7 +84,9 @@ public class BookedRoomHtmlController {
                 logger.error("Room not found" + roomDto.getId());
                 return "bookings/deniedBooking";
             }
-            bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
+            Double totalPrice = bookedRoomServiceHtml.createBooking(detailedBookedRoomDto);
+            model.addAttribute("totalPrice", totalPrice);
+
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
             return "bookings/alreadyBooked";

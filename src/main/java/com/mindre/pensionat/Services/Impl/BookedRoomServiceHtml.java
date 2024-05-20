@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BookedRoomServiceHtml {
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
+    private final DiscountService ds = new DiscountService();
 
     @Autowired
     private final CustomerRepo customerRepo;
@@ -53,13 +57,13 @@ public class BookedRoomServiceHtml {
         }
     }
 
-    public void createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
+    public Double createBooking(DetailedBookedRoomDto detailedBookedRoomDto) {
 
         try {
 
             Room selectedRoom = roomRepo.findById(detailedBookedRoomDto.getRoomId())
                     .orElseThrow(() -> new RuntimeException("Room not found"));
-
+            Double totalPrice = ds.calculateBookingCost(selectedRoom.getId(), detailedBookedRoomDto.getCheckIn(),detailedBookedRoomDto.getCheckOut());
 
             BookedRoom newBookedRoom = new BookedRoom();
             newBookedRoom.setCheckIn(detailedBookedRoomDto.getCheckIn());
@@ -87,9 +91,11 @@ public class BookedRoomServiceHtml {
             newBookedRoom.setCustomer(newCustomer);
             bookedRoomRepo.save(newBookedRoom);
 
+            return totalPrice;
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while creating the booking and customer: " + e.getMessage());
         }
+
     }
 
     public void deleteBooking(Long id) {
@@ -116,7 +122,7 @@ public class BookedRoomServiceHtml {
 
     public void checkReservation(Long roomId, BookedRoom bookingRequest) {
 
-        if (bookingRequest.getCheckOut().before(bookingRequest.getCheckIn())) {
+        if (bookingRequest.getCheckOut().isBefore(bookingRequest.getCheckIn())) {
             throw new RuntimeException("Check-in date must come before check-out date");
         }
         Room room = roomRepo.findById(roomId).get();
@@ -137,18 +143,19 @@ public class BookedRoomServiceHtml {
                 .filter(existingBooking -> existingBooking.getRoom().equals(room))
                 .noneMatch(existingBooking ->
                         reservationRequest.getCheckIn().equals(existingBooking.getCheckIn())
-                                || reservationRequest.getCheckOut().before(existingBooking.getCheckOut())
-                                || (reservationRequest.getCheckIn().after(existingBooking.getCheckIn())
-                                && reservationRequest.getCheckIn().before(existingBooking.getCheckOut()))
-                                || (reservationRequest.getCheckIn().before(existingBooking.getCheckIn())
+                                || reservationRequest.getCheckOut().isBefore(existingBooking.getCheckOut())
+                                || (reservationRequest.getCheckIn().isAfter(existingBooking.getCheckIn())
+                                && reservationRequest.getCheckIn().isBefore(existingBooking.getCheckOut()))
+                                || (reservationRequest.getCheckIn().isBefore(existingBooking.getCheckIn())
                                 && reservationRequest.getCheckOut().equals(existingBooking.getCheckOut()))
-                                || (reservationRequest.getCheckIn().before(existingBooking.getCheckIn())
-                                && reservationRequest.getCheckOut().after(existingBooking.getCheckOut()))
+                                || (reservationRequest.getCheckIn().isBefore(existingBooking.getCheckIn())
+                                && reservationRequest.getCheckOut().isAfter(existingBooking.getCheckOut()))
                                 || (reservationRequest.getCheckIn().equals(existingBooking.getCheckOut())
                                 && reservationRequest.getCheckOut().equals(existingBooking.getCheckIn()))
                                 || (reservationRequest.getCheckIn().equals(existingBooking.getCheckOut())
                                 && reservationRequest.getCheckOut().equals(reservationRequest.getCheckIn()))
                 );
     }
+
 }
 

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -17,9 +18,9 @@ public class BookedRoomDto {
 
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date checkIn;
+    private LocalDate checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date checkOut;
+    private LocalDate checkOut;
     @Min(0)
     private int amountPersons;
 
