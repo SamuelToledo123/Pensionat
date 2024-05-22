@@ -27,12 +27,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BookedRoomServiceHtml {
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
-    private final DiscountService ds = new DiscountService();
 
     @Autowired
     private final CustomerRepo customerRepo;
     private final BookedRoomRepo bookedRoomRepo;
     private final RoomRepo roomRepo;
+    private final DiscountService ds;
 
 
     public List<DetailedBookedRoomDto> getAllDetailedBookedRoomDto() {

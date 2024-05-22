@@ -2,6 +2,8 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.RoomRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -9,10 +11,12 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Service
+@RequiredArgsConstructor
 public class DiscountService {
 
+    @Autowired
     private RoomRepo roomRepo;
-    public Double calculateBookingCost(long roomId, LocalDate checkIn, LocalDate checkOut) {
+   public Double calculateBookingCost(long roomId, LocalDate checkIn, LocalDate checkOut) {
         Room room = roomRepo.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
         double pricePerNight = room.getPricePerNight();
 
