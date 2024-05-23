@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customers</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="/form.css">
+</head>
+
+  </a>
+  </li>
+
+  <li>
+    <a href="/admin" >
+      <span class="sidebar-icon"><i class="fas fa-calendar"></i></span>
+      <span class="sidebar-text"> Admin</span>
+    </a>
+  </li>
+  <li>
+    <a href="/customer"  sec:authorize="hasAuthority('Customer')">
+      <span class="sidebar-icon"><i class="fas fa-calendar"></i></span>
+      <span class="sidebar-text"> Customer</span>
+    </a>
+  </li>
+  <li>
+    <a href="/profile" >
+      <span class="sidebar-icon"><i class="fas fa-calendar"></i></span>
+      <span class="sidebar-text"> Profile</span>
+    </a>
+  </li>
+
+  <li sec:authorize="isAuthenticated()">
+    <a href="/logout" >
+      <span class="sidebar-icon"><i class="fas fa-calendar"></i></span>
+      <span class="sidebar-text"> Logout</span>
+    </a>
+  </li>
+
+
+
+
+
+  <th:block th:each="org: ${orgpermissions}">
+    <li class="line-split">
+    </li>

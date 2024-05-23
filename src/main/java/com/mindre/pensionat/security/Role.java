@@ -1,9 +1,10 @@
-package com.mindre.pensionat.Security;
+package com.mindre.pensionat.security;
 
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Table(name="Role")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
 
 
