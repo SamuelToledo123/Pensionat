@@ -1,4 +1,4 @@
-package com.mindre.pensionat.security;
+/*package com.mindre.pensionat.security;
 
 
 
@@ -28,3 +28,5 @@ import org.springframework.web.bind.annotation.PathVariable;
         @PreAuthorize("isAuthenticated()")
         String Edit(@PathVariable("id") UUID id, Model model){
             model.addAttribute("activeFunction", "queues");
+
+ */

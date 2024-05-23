@@ -6,10 +6,15 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.mindre.pensionat.Models.AllContractCustomers;
 import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Repo.ContractCustomerRepo;
+import com.mindre.pensionat.security.UserDataSeeder;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;

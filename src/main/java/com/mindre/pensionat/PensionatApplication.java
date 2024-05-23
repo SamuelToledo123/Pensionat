@@ -3,6 +3,9 @@ package com.mindre.pensionat;
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
+import com.mindre.pensionat.security.UserDataSeeder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +18,52 @@ import java.util.Objects;
 @SpringBootApplication
 public class PensionatApplication {
 
+    @Autowired
+    private UserDataSeeder userDataSeeder;
+    private static final Logger logger = LoggerFactory.getLogger(PensionatApplication.class);
 
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            SpringApplication.run(PensionatApplication.class, args);
+
+
+        }
+    }
+    @Bean
+    CommandLineRunner commandLineRunner() {
+        return args -> {
+
+
+            try {
+                userDataSeeder.Seed();
+                logger.info("UserDataSeeder Successfull");
+            } catch (Exception e) {
+                logger.error("Couldnt seed UserData");
+            }
+
+        };
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     public static void main(String[] args) {
             if (args.length == 0) {
                 SpringApplication.run(PensionatApplication.class, args);
@@ -27,6 +75,8 @@ public class PensionatApplication {
             }
         }
     }
+
+     */
 
 
 

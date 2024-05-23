@@ -14,6 +14,8 @@ public class ConcreteUserDetails implements UserDetails {
         this.user = user;
     }
 
+
+  //ANROPA NÄR MAN BEHÖVER VETA VILKEN ROLL EN PERSON HAR
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
@@ -51,7 +53,7 @@ public class ConcreteUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isEnabled();
     }
 
 
