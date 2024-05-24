@@ -44,7 +44,7 @@ public class WebSecurityConfig {
         //       .loginPage("/login")
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/**", "/images/**", "/login/**", "/logout","/queues/**" ).permitAll()
+                        .requestMatchers("/",  "/js/**", "/css/**", "/images/**", "/login/**", "/logout","/queues/**" ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
