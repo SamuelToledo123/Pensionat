@@ -5,29 +5,21 @@ import com.mindre.pensionat.Repo.RoomRepo;
 import com.mindre.pensionat.Services.Impl.DiscountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDate;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 public class DiscountServiceTest {
+
         @Autowired
         private DiscountService sut;
-
-
         @Autowired
         private RoomRepo roomRepo;
+
     @BeforeEach
     void init() {
         Room room = new Room();
@@ -63,5 +55,4 @@ public class DiscountServiceTest {
             double result = sut.calculateBookingCost(1L, LocalDate.of(2024, 5, 19), LocalDate.of(2024, 5, 23));
             assertEquals(780, result);
         }
-
 }
