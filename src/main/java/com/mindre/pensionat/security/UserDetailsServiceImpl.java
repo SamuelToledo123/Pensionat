@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public String createUser(@Valid @ModelAttribute UserDto userDto, String group, BindingResult result) {
         if (result.hasErrors()) {
             logger.error("Validation errors: {}", result.getAllErrors());
-            return "Users/CreateUser";
+            return "users/CreateUser";
         }
 
         try {
