@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,14 +41,13 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //       .loginPage("/login")
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/",  "/js/**", "/css/**", "/images/**", "/login/**", "/logout","/queues/**" ).permitAll()
+                        .requestMatchers("/**", "/images/**", "/login/**", "/logout","/queues/**","/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin((form) -> form
-//                        .loginPage("/login")
-                                .permitAll()
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
 
                 )
                 .logout((logout) -> {

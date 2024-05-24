@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
@@ -56,25 +59,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         try {
-
-            ArrayList<Role> roles = new ArrayList<>();
-            roles.add(roleRepository.findByName(group));
-
-            String hashedPassword = passwordEncoder.encode(userDto.getPassword());
-
-            User user =  new User();
+            User user = new User();
             user.setUsername(userDto.getUsername());
-            user.setPassword(hashedPassword);
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.setEnabled(true);
-            user.setRoles(user.getRoles());
-
-            user = User.builder().enabled(true).password(hashedPassword).username(group).roles(roles).build();
-
+            user.setRoles(Collections.singletonList(roleRepository.findByName(group)));
             userRepository.save(user);
-            logger.info("Saved User");
-
+            logger.info("Saved User: {}", user.getUsername());
         } catch (Exception e) {
-            logger.error("Error occurred while creating the User");
+            logger.error("Error occurred while creating the User", e);
         }
         return "redirect:/users";
     }
@@ -90,7 +83,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             userDto.setUsername(user.getUsername());
             userDto.setPassword(user.getPassword());
             userDto.setEnabled(user.isEnabled());
-            userDto.setRoles(user.getRoles());
+
 
             model.addAttribute("userDto", userDto);
 
@@ -115,7 +108,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.setUsername(userDto.getUsername());
                 user.setPassword(userDto.getPassword());
                 user.setEnabled(userDto.isEnabled());
-                user.setRoles(userDto.getRoles());
+
 
                 model.addAttribute("userDto" , userDto);
 

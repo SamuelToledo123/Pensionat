@@ -15,7 +15,6 @@ public class ConcreteUserDetails implements UserDetails {
     }
 
 
-  //ANROPA NÄR MAN BEHÖVER VETA VILKEN ROLL EN PERSON HAR
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();

@@ -24,5 +24,5 @@ public class UserDto {
     private String password;
     private boolean enabled;
 
-    private Collection<Role> roles;
+    Role role = new Role();
 }
