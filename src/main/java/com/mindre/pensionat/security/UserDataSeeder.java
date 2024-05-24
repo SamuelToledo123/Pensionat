@@ -44,5 +44,4 @@ public class UserDataSeeder {
         Role role = new Role();
         roleRepository.save(Role.builder().name(name).build());
     }
-
 }
