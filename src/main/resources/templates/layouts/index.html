@@ -28,11 +28,11 @@
                 <a href="/rooms">Rooms</a>
                     <a href="/login" sec:authorize="!isAuthenticated()">Login</a>
                     <div sec:authorize="isAuthenticated()">
-                        <a href="/login" sec:authorize="isAuthenticated()">Logout</a>
+                        <a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
 
 
 
-
+                    </div>
            </div>
 
 
