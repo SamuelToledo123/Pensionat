@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
@@ -12,23 +13,31 @@
 <body>
 <div class="bok-area">
     <header>
-        <div class="wrapper">
+
+            <div class="wrapper d-flex align-items-center justify-content-between">
             <div class="logo">
                 <a href="index.html">Pensionat</a>
-            </div>
-            <nav>
-                <a href="/booking/create">New Reservation</a>
-                <a href="/customers">All Customers</a>
-                <a href="/booking/edit">All bookings</a>
-                <a href="/contract/customers">contracts</a>
-                <a href="/rooms">#</a>
-            </nav>
-        </div>
-    </header>
-    <div class="banner-area">
-        <h1 class="text-banner">Admin Page</h1>
 
-    </div>
+            </div>
+
+
+                <a href="/booking/create">Reservation</a>
+                <a href="/customers">Customers</a>
+                <a href="/booking/edit">Bookings</a>
+                <a href="/contract/customers">Contracts</a>
+                <a href="/rooms">Rooms</a>
+                    <a href="/login" sec:authorize="!isAuthenticated()">Login</a>
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="/login" sec:authorize="isAuthenticated()">Logout</a>
+
+
+
+
+           </div>
+
+
+    </header>
+
     <div class="content-area">
         <div class="wrapper">
             <h2>Popular</h2>

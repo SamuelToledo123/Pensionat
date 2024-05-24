@@ -29,7 +29,7 @@
     </a>
   </li>
 
-  <li sec:authorize="isAuthenticated()">
+  <li sec:authorize="hasAnyAuthority('Customer','Admin' )">
     <a href="/logout" >
       <span class="sidebar-icon"><i class="fas fa-calendar"></i></span>
       <span class="sidebar-text"> Logout</span>

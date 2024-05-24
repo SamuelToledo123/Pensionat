@@ -15,6 +15,9 @@ body{
 .wrapper{
     width: 1170px;
     margin: 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+
 }
 
 header{
