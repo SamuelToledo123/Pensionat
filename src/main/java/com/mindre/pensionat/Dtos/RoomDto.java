@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class RoomDto {
     @NotNull(message = "room size is required")
     private int roomSize;
 
-    private Event event;
+    private List<EventDto> events;
 
 
 }

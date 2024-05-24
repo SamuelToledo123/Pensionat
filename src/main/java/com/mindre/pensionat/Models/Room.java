@@ -26,9 +26,8 @@ public class Room {
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRooms;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Event> events;
 
     public Room(Long id, String roomType, int roomSize, int amountOfBeds, boolean available) {
         this.id = id;

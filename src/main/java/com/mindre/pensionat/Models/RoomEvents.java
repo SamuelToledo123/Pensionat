@@ -6,27 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Event {
-
+public class RoomEvents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String employeeName;
-    private String eventType;
+    private Long id;
 
-    @Column(columnDefinition = "DATETIME")
-    private LocalDateTime eventTimeStamp;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
 
-
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 }

@@ -1,14 +1,8 @@
 package com.mindre.pensionat;
 
-import com.mindre.pensionat.Models.Room;
-import com.mindre.pensionat.Repo.CustomerRepo;
-import com.mindre.pensionat.Repo.RoomRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Objects;
 
