@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "layouts/index"; // Return the name of your Thymeleaf template
+        return "layouts/index";
     }
 }
