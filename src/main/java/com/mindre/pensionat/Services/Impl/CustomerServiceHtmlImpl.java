@@ -1,7 +1,6 @@
 package com.mindre.pensionat.Services.Impl;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
-import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Models.Customer;
 import com.mindre.pensionat.Repo.BookedRoomRepo;
 import com.mindre.pensionat.Repo.ContractCustomerRepo;
@@ -15,7 +14,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
