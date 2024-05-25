@@ -51,6 +51,20 @@
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Role</label>
+                        <div class="col-sm-8">
+                            <select class="form-select" th:field="${userDto.roleDto.name}" required>
+                                <option value="">Choose a role...</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Customer">Customer</option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('roleDto.name')}" th:errorclass="text-danger"
+                               th:errors="${userDto.roleDto.name}"></p>
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4 d-grid">
                             <button type="submit" class="btn btn-primary">Submit</button>

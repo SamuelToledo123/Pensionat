@@ -1,20 +1,14 @@
 package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.UserDto;
-import com.mindre.pensionat.security.BaseController;
-import com.mindre.pensionat.security.User;
-import com.mindre.pensionat.security.UserDetailsServiceImpl;
+import com.mindre.pensionat.security.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -23,7 +17,13 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController extends BaseController {
 
+    @Autowired
     private final UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+
 
 
     @GetMapping({"", "/"})
@@ -31,31 +31,31 @@ public class UserController extends BaseController {
         return userDetailsService.getUsers(model);
     }
 
-
     @GetMapping("/create")
     public String getCreatePage(Model model) {
         return userDetailsService.getCreatePage(model);
     }
 
-
     @PostMapping("/create")
-    public String createUser(UserDto userDto,String group ,BindingResult result) {
-        return userDetailsService.createUser(userDto,group,result);
-    }
-
-    @PostMapping("/update")
-    public String getUpdatePage(Model model, UUID id) {
-        return userDetailsService.getUpdatePage(model,id);
+    public String createUser(@Valid @ModelAttribute UserDto userDto, BindingResult result,String group) {
+        return userDetailsService.createUser(userDto, result, group);
     }
 
 
     @GetMapping("/update")
-    public String updateUser(UUID id, UserDto userDto, Model model, BindingResult result) {
-        return userDetailsService.updateUser(id,userDto,model,result);
+    public String getUpdatePage(Model model, @RequestParam UUID id) {
+        return userDetailsService.getUpdatePage(model, id);
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam UUID id, @Valid @ModelAttribute User updateUser, Model model, BindingResult result) {
+        return userDetailsService.updateUser(id, updateUser, model, result);
     }
 
     @GetMapping("/delete")
-    public String deleteUser(UUID id) {
+    public String deleteUser(@RequestParam UUID id) {
         return userDetailsService.deleteUser(id);
     }
 }
+
+

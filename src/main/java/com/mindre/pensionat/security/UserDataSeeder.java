@@ -1,7 +1,6 @@
 package com.mindre.pensionat.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.stereotype.Service;
@@ -17,12 +16,12 @@ public class UserDataSeeder {
 
     public void Seed(){
         if (roleRepository.findByName("Admin") == null) {
-            addRole("Admin");
+            addRole("ADMIN");
         }
         if (roleRepository.findByName("Customer") == null) {
             addRole("Customer");
         }
-        if(userRepository.getUserByUsername("kareem.drammeh@yh.nackademin.se") == null){
+        if(userRepository.getUserByUsername("kareem.drammeh@yh.nackademin.se") == null) {
             addUser("kareem.drammeh@yh.nackademin.se","Admin");
         }
         if(userRepository.getUserByUsername("martin@outlook.com") == null){

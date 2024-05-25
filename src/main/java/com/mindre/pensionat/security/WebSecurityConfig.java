@@ -39,12 +39,16 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //       .loginPage("/login")
+
         http
+                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/**", "/images/**", "/login/**", "/logout","/queues/**","/users/**").permitAll()
+                        .requestMatchers("/static/**","/js/**", "/css/**", "/images/**", "/login/**", "/logout**","/queues/**"
+                        ,"/Bookings/**","/contract/**","/customers/**","/rooms/**","/security/**","/users/**").permitAll()
+                        //.requestMatchers("/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll

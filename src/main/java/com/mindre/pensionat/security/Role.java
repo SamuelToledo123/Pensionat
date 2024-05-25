@@ -15,12 +15,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Builder
-
-
-
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
+
 }
