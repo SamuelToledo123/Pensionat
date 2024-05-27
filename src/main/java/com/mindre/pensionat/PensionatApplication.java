@@ -34,6 +34,7 @@ public class PensionatApplication {
         return args -> {
 
 
+
             try {
                 userDataSeeder.Seed();
                 logger.info("UserDataSeeder Successfull");
