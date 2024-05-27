@@ -29,22 +29,23 @@
             <h1 class="text-center my-4">Room</h1>
 
             <table class="table">
+
                 <thead>
                 <tr>
                     <th>Room</th>
                     <th>Type</th>
-                    <th>Employee</th>
-                    <th>Time</th>
+                    <th>By Employee</th>
+                    <th>Date & Time</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                 <tr th:each="event : ${events}">
-                    <td th:text="${room.roomType}"></td>
+                    <td th:text="${room.id}"></td>
                     <td th:text="${event.type}"></td>
                     <td th:text="${event.employee}"></td>
-                    <td th:text="${event.date}"></td>
+                    <td th:text="${event.formattedDateTime}"></td>
 
 
                 </tr>

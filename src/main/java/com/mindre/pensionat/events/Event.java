@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Data
@@ -36,10 +37,15 @@ public class Event {
     private String type;
     private String employee;
 
-        public LocalDate date;
+        public LocalDateTime date;
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "room_id")
         private Room room;
+
+    public String getFormattedDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return date.format(formatter);
+    }
 
     }
 

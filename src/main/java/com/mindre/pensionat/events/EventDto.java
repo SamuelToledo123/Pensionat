@@ -19,7 +19,7 @@ public class EventDto {
 
     private Long id;
     private String type;
-    public LocalDate date;
+    public LocalDateTime date;
     private String employee;
 
     Event event;
