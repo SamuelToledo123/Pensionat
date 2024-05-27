@@ -1,6 +1,7 @@
 package com.mindre.pensionat.events;
 
 
+import com.mindre.pensionat.Models.Room;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,13 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String employee;
-    private String room;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
-    @Column(columnDefinition = "DATETIME")
     private LocalDateTime openedDoor;
     private LocalDateTime closedDoor;
     private LocalDateTime cleanStart;
     private LocalDateTime cleanEnd;
+
 }

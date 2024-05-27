@@ -29,13 +29,13 @@ public class RoomServiceImpl implements RoomService {
         return repo.findAll().stream().map(room -> roomToRoomDto(room)).toList();
 
     }
-
     @Override
     public RoomDto roomToRoomDto(Room room) {
-        Event event = room.getEvent();
-
-
-        return null;
+        RoomDto dto = new RoomDto();
+        dto.setId(room.getId());
+        dto.setRoomType(room.getRoomType());
+        dto.setRoomSize(room.getRoomSize());
+        dto.setAmountOfBeds(room.getAmountOfBeds());
+        return dto;
     }
-
 }

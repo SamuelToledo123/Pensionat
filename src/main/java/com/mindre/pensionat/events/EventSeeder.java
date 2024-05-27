@@ -1,10 +1,15 @@
 package com.mindre.pensionat.events;
 
+import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.EventRepo;
+import com.mindre.pensionat.Repo.RoomRepo;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -12,36 +17,40 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 @Service
+@Component
 public class EventSeeder {
 
-    private static final List<String> ROOMS = Arrays.asList("Room1", "Room2", "Room3", "Room4", "Room5");
     private static final List<String> EMPLOYEES = Arrays.asList("Alice", "Bob", "Charlie", "David", "Eve");
+
+   @Autowired
+   public RoomRepo roomRepo;
 
     @Autowired
     private EventRepo eventRepo;
-    @PostConstruct
+
+    @Transactional
     public void seed() {
         Random random = new Random();
+        List<Room> availableRooms = roomRepo.findAll();
+
+
+        LocalDateTime now = LocalDateTime.now();
+
         IntStream.range(0, 10).forEach(i -> {
             Event event = new Event();
             event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
-            event.setRoom(ROOMS.get(random.nextInt(ROOMS.size())));
-            event.setOpenedDoor(randomDateTime());
-            event.setClosedDoor(randomDateTime());
-            event.setCleanStart(randomDateTime());
-            event.setCleanEnd(randomDateTime());
+
+            if (!availableRooms.isEmpty()) {
+                Room room = availableRooms.get(random.nextInt(availableRooms.size()));
+                event.setRoom(room);
+            }
+            event.setOpenedDoor(now);
+            event.setClosedDoor(now);
+            event.setCleanStart(now);
+            event.setCleanEnd(now);
+
+
             eventRepo.save(event);
         });
-    }
-
-    private LocalDateTime randomDateTime() {
-        Random random = new Random();
-        int year = 2023; // You can adjust the year as needed
-        int month = random.nextInt(12) + 1;
-        int day = random.nextInt(28) + 1; // To avoid issues with different month lengths
-        int hour = random.nextInt(24);
-        int minute = random.nextInt(60);
-        int second = random.nextInt(60);
-        return LocalDateTime.of(year, month, day, hour, minute, second);
     }
 }
