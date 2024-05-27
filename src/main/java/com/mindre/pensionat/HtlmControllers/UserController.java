@@ -1,10 +1,11 @@
 package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.UserDto;
-import com.mindre.pensionat.security.*;
+import com.mindre.pensionat.security.Role;
+import com.mindre.pensionat.security.User;
+import com.mindre.pensionat.security.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,16 +16,9 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController extends BaseController {
+public class UserController {
 
-    @Autowired
     private final UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-
-
 
     @GetMapping({"", "/"})
     public String getUsers(Model model) {
@@ -37,19 +31,19 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/create")
-    public String createUser(@Valid @ModelAttribute UserDto userDto, BindingResult result,String group) {
-        return userDetailsService.createUser(userDto, result, group);
+    public String createUser(@Valid @ModelAttribute User newUser, @RequestParam String role) {
+        return userDetailsService.createUser(newUser, role);
     }
-
 
     @GetMapping("/update")
     public String getUpdatePage(Model model, @RequestParam UUID id) {
         return userDetailsService.getUpdatePage(model, id);
     }
 
+
     @PostMapping("/update")
-    public String updateUser(@RequestParam UUID id, @Valid @ModelAttribute User updateUser, Model model, BindingResult result) {
-        return userDetailsService.updateUser(id, updateUser, model, result);
+    public String updateUser(@RequestParam UUID id, @Valid @ModelAttribute UserDto existingUser, Model model, BindingResult result) {
+        return userDetailsService.updateUser(id, existingUser, result, model);
     }
 
     @GetMapping("/delete")
@@ -57,5 +51,3 @@ public class UserController extends BaseController {
         return userDetailsService.deleteUser(id);
     }
 }
-
-

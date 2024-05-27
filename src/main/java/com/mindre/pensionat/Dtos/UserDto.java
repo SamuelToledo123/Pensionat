@@ -13,15 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
-@Setter
 public class UserDto {
 
     private UUID id;
     private String username;
     private String password;
-    private boolean enabled;
-    private RoleDto roleDto;
+    private Collection<String> roles;
+    RoleDto roleDto;
 
 }
 

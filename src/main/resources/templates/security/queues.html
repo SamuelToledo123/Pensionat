@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/layouttemplate"
+      data-theme="light">
+
+
+<th:block layout:fragment="extraHead">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.js"></script>
+    <script src="/js/modal.js"></script>
+
+</th:block>
+
+<!--    <header>-->
+<!--        <div class="content">-->
+<!--            <div class="btn-left">-->
+<!--                <button class="btn btn-blue">-->
+<!--                    <span class="fas fa-plus mr-2"></span>-->
+<!--                    New Task-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="btn-right">-->
+<!--                <button class="btn btn-sec left-radius">Share</button>-->
+<!--                <button class="btn btn-sec right-radius">Export</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </header>    -->
+<div layout:fragment="mainContent">
+
+    <div class="row-box">
+        <div class="col-boxes-1">
+            <div class="col-table">
+                <div class="table-section">
+                    <div class="header-table">
+                        <h2>Alla köer</h2>
+                        <!--                        <a href="#">see all</a>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <a class="listbutton" href="/queues/new">
+        <span class="fas fa-plus mr-2"></span>
+        Ny kö
+    </a>
+    <br/><br/>
+    <table class="tabulator-table">
+        <thead>
+        <tr class="tabulator-row">
+            <th class="tabulator-cell">
+                Kö id
+            </th>
+
+            <th >
+                Gruppnamn
+            </th>
+            <th >
+                Messages to send
+            </th>
+            <th></th>
+        </tr>
+
+        </thead>
+        <tbody id="tablerows">
+        <tr th:each="queue: ${queues}">
+            <th th:text="${queue.getId()}"></th>
+            <td th:text="${queue.getName()}"></td>
+            <td th:text="${queue.getMessagesToSend()}"></td>
+            <td>
+                <a class="listbutton" th:href="@{/queues/edit/__${queue.getId()}__}">Edit</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+
+</html>

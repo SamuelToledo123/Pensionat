@@ -36,9 +36,9 @@ public class PensionatApplication {
 
             try {
                 userDataSeeder.Seed();
-                logger.info("UserDataSeeder Successfull");
+                logger.info("UserDataSeeder Successfully");
             } catch (Exception e) {
-                logger.error("Couldnt seed UserData");
+                logger.error("Couldn't seed UserData");
             }
 
         };

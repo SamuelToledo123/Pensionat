@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sv"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/layouttemplate"
+      data-theme="light">
+
+
+<th:block layout:fragment="extraHead">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.js"></script>
+    <script src="/js/modal.js"></script>
+
+</th:block>
+
+<!--    <header>-->
+<!--        <div class="content">-->
+<!--            <div class="btn-left">-->
+<!--                <button class="btn btn-blue">-->
+<!--                    <span class="fas fa-plus mr-2"></span>-->
+<!--                    New Task-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="btn-right">-->
+<!--                <button class="btn btn-sec left-radius">Share</button>-->
+<!--                <button class="btn btn-sec right-radius">Export</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </header>    -->
+<div layout:fragment="mainContent">
+
+
+    <div class="row-box">
+        <div class="col-boxes-1">
+            <div class="col-table">
+                <div class="table-section">
+                    <div class="header-table">
+                        <h2>Edit kö </h2>
+                        <!--                        <a href="#">see all</a>-->
+                    </div>
+                    <form  th:object="${queue}"
+                           method="post"
+                           class="form">
+                        <!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />`-->
+                        <table width="100%">
+                            <thead>
+                            <tr>
+                                <th><span class="las la-sort"></span> </th>
+                                <th width="90%"><span class="las la-sort"></span> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th><label for="name">Name</label></th>
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{name}" id="name">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th><label for="name">Rum id:n (CSV)</label></th>
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{roomIdCSV}" id="roomIdCSV">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('roomIdCSV')}" th:errors="*{roomIdCSV}"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th><label for="name">Messages to send</label></th>
+                                <td>
+                                    <input class="form-control" type="number" th:field="*{messagesToSend}" id="messagesToSend">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('messagesToSend')}" th:errors="*{messagesToSend}"></div>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="submit"  class="listbutton" value="Save">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <a href="/queues" class="listbutton">Cancel</a>
+                                </td>
+                            </tr>
+                            </tbody>
+
+
+                        </table>
+                    </form>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+</html>

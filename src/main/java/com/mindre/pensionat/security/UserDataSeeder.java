@@ -14,18 +14,18 @@ public class UserDataSeeder {
     @Autowired
     RoleRepository roleRepository;
 
-    public void Seed(){
+    public void Seed() {
         if (roleRepository.findByName("Admin") == null) {
-            addRole("ADMIN");
+            addRole("Admin");
         }
         if (roleRepository.findByName("Customer") == null) {
             addRole("Customer");
         }
-        if(userRepository.getUserByUsername("kareem.drammeh@yh.nackademin.se") == null) {
-            addUser("kareem.drammeh@yh.nackademin.se","Admin");
+        if (userRepository.getUserByUsername("kareem.drammeh@yh.nackademin.se") == null) {
+            addUser("kareem.drammeh@yh.nackademin.se", "Admin");
         }
-        if(userRepository.getUserByUsername("martin@outlook.com") == null){
-            addUser("martin@outlook.com","Customer");
+        if (userRepository.getUserByUsername("martin@outlook.com") == null) {
+            addUser("martin@outlook.com", "Customer");
         }
     }
 

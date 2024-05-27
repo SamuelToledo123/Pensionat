@@ -1,27 +1,24 @@
 package com.mindre.pensionat.security;
 
-
 import com.mindre.pensionat.Dtos.UserDto;
+import com.mindre.pensionat.Utils.UserMapper;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
-
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -29,45 +26,50 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public String getUsers(Model model) {
-        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        model.addAttribute("users", users);
+        List<User> users = (List<User>) userRepository.findAll();
+        List<UserDto> userDtos = users.stream().map(UserMapper::toDto).collect(Collectors.toList());
+        model.addAttribute("users", userDtos);
         return "users/index";
     }
 
     public String getCreatePage(Model model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("userDto", userDto);
-
+        model.addAttribute("user",new User());
         return "users/CreateUser";
     }
 
-
-    @PostMapping("/users")
-    public String createUser(@Valid @ModelAttribute UserDto userDto, BindingResult result,String group) {
-        if (result.hasErrors()) {
-            logger.error("Validation errors: {}", result.getAllErrors());
-            return "users/CreateUser";
+    public String createUser(User newUser , String role) {
+        Role userRole = roleRepository.findByName(role);
+        if (userRole == null) {
+            userRole = new Role(role);
+            roleRepository.save(userRole);
         }
 
         try {
-            ArrayList<Role> roles = new ArrayList<>();
-            roles.add(roleRepository.findByName(group));
-
-           User newUser = User.builder()
+            newUser = User.builder()
                     .enabled(true)
-                    .password(passwordEncoder.encode(userDto.getPassword()))
-                    .username(userDto.getUsername())
-                    .roles(roles)
+                    .username(newUser.getUsername())
+                    .password(passwordEncoder.encode(newUser.getPassword()))
                     .build();
 
+            if (newUser.getRoles() == null) {
+                newUser.setRoles(new ArrayList<>());
+            } else {
+                if (newUser.getRoles().contains(userRole)) {
+                    throw new RuntimeException("User already has the role: " + userRole.getName());
+                }
+            }
+
+            newUser.getRoles().add(userRole);
             userRepository.save(newUser);
+
             logger.info("Saved User: {}", newUser.getUsername());
         } catch (Exception e) {
             logger.error("Error occurred while creating the User", e);
@@ -78,89 +80,66 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 
+    @GetMapping("/update")
     public String getUpdatePage(Model model, @RequestParam UUID id) {
-
         try {
-
-            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Couldn't find ID"));
-            model.addAttribute("user", user);
-
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+            model.addAttribute("userDto", UserMapper.toDto(user));
+            return "users/UpdateUser";
         } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            logger.error("Error occurred while retrieving user for update", e);
             return "redirect:/users";
         }
-
-        return "users/UpdateUser";
     }
 
-    public String updateUser(@RequestParam UUID id, @Valid @ModelAttribute User updateUser, Model model, BindingResult result) {
-
+    @PostMapping("/update")
+    public String updateUser(@RequestParam UUID id, @Valid @ModelAttribute UserDto userDto, BindingResult result, Model model) {
         try {
-            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Couldn't find ID"));
-            model.addAttribute("user", user);
+
+            User existingUser = userRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("User was not found"));
+
+            existingUser.setUsername(userDto.getUsername());
+            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            existingUser.setEnabled(true);
 
             if (result.hasErrors()) {
+                logger.error("Validation errors: {}", result.getAllErrors());
+                model.addAttribute("user", existingUser);
                 return "users/UpdateUser";
             }
 
-            user.setUsername(updateUser.getUsername());
-            user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-            user.setEnabled(updateUser.isEnabled());
-
-
-            model.addAttribute("updateUser", updateUser);
-
-            userRepository.save(user);
-            logger.info("Updated User with Username: {}", user.getUsername());
-
+            userRepository.save(existingUser);
+            logger.info("Updated User with Username: {}", existingUser.getUsername());
         } catch (Exception e) {
-            logger.error("Error While Update User");
-
+            logger.error("Error occurred while updating the user", e);
+            return "users/UpdateUser";
         }
+
         return "redirect:/users";
     }
 
 
     public String deleteUser(@RequestParam UUID id) {
-
         try {
+            userRepository.deleteById(id);
+            logger.info("Deleted User with the id: {}", id);
 
-            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Couldn't find ID"));
-            userRepository.delete(user);
-            logger.info("Deleted User with ID: {}", user.getId());
-
-        } catch (Exception e) {
-            System.out.println("Error While deleting User" + e.getMessage());
+    } catch (Exception e) {
+        logger.error("Error while Deleting Reservation");
         }
         return "redirect:/users";
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.getUserByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("couldn't find user: " + username);
+            throw new UsernameNotFoundException("Couldn't find user: " + username);
         }
 
         return new ConcreteUserDetails(user);
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

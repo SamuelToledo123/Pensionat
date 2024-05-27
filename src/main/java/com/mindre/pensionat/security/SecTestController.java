@@ -2,20 +2,13 @@ package com.mindre.pensionat.security;
 
 import com.mindre.pensionat.Models.Queue;
 import com.mindre.pensionat.Repo.QueueRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-
-import java.util.UUID;
 
 
 @Controller
@@ -34,14 +27,14 @@ public class SecTestController extends BaseController {
         return "security/admin";
     }
 
-    @GetMapping(path = "/customer")
+  /*  @GetMapping(path = "/customer")
     @PreAuthorize("hasAuthority('Customer')")
     public String Mew(Model model) {
 
         model.addAttribute("queue", new Queue());
         model.addAttribute("activeFunction", "queues");
         return "security/customer";
-    }
+    } */
 
     @GetMapping(path = "/profile")
     @PreAuthorize("isAuthenticated()")
