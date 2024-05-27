@@ -1,10 +1,9 @@
 package com.mindre.pensionat.Dtos;
 
-import com.mindre.pensionat.Models.Event;
+import com.mindre.pensionat.events.Event;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.mindre.pensionat.Models;
+package com.mindre.pensionat.events;
 
 
 import jakarta.persistence.*;
@@ -20,13 +20,11 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String employee;
+    private String room;
 
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime openedDoor;
     private LocalDateTime closedDoor;
     private LocalDateTime cleanStart;
     private LocalDateTime cleanEnd;
-
-
-
 }

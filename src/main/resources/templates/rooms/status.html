@@ -32,7 +32,7 @@
                 <thead>
                 <tr>
                     <th>Room ID</th>
-                    <th>Event ID</th>
+
                     <th>Door Opened</th>
                     <th>Door Closed</th>
                     <th>Clean Start</th>
@@ -43,9 +43,8 @@
                 <tbody>
                 <tr>
                     <td th:text="${room.id}"></td>
-                    <td th:text="${room.event.id}"></td>
                     <td th:text="${room.event.openedDoor}"></td>
-                    <td th:text="${room.event.getClosedDoor()}"></td>
+                    <td th:text="${room.event.getClosedDoor}"></td>
                     <td th:text="${room.event.cleanStart}"></td>
                     <td th:text="${room.event.cleanEnd}"></td>
                     <td th:text="${room.event.employee}"></td>

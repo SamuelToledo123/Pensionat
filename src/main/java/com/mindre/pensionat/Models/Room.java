@@ -1,5 +1,6 @@
 package com.mindre.pensionat.Models;
 
+import com.mindre.pensionat.events.Event;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
