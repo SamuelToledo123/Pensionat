@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 @Component
 public class EventSeeder {
 
-    private static final List<String> EMPLOYEES = Arrays.asList("Alice", "Bob", "Charlie", "David", "Eve");
+    private static final List<String> EMPLOYEES = Arrays.asList("Kareem", "Martin", "Samuel", "David", "Jireel");
 
    @Autowired
    public RoomRepo roomRepo;
@@ -32,25 +32,71 @@ public class EventSeeder {
     public void seed() {
         Random random = new Random();
         List<Room> availableRooms = roomRepo.findAll();
-
-
-        LocalDateTime now = LocalDateTime.now();
-
-        IntStream.range(0, 10).forEach(i -> {
-            Event event = new Event();
-            event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
-
-            if (!availableRooms.isEmpty()) {
-                Room room = availableRooms.get(random.nextInt(availableRooms.size()));
-                event.setRoom(room);
-            }
-            event.setOpenedDoor(now);
-            event.setClosedDoor(now);
-            event.setCleanStart(now);
-            event.setCleanEnd(now);
-
+        LocalDate now = LocalDate.now();
+        IntStream.range(0, 20).forEach(i -> {
+            Event event = createRandomEvent(now, availableRooms, random);
+            eventRepo.save(event);
 
             eventRepo.save(event);
         });
     }
+
+    private Event createRandomEvent(LocalDate timeStamp, List<Room> availableRooms, Random random) {
+        String eventType = getRandomEventType();
+        switch (eventType) {
+            case "RoomClosed":
+                return roomClosedEvent(timeStamp, availableRooms, random);
+            case "RoomCleaned":
+                return roomCleanedEvent(timeStamp, availableRooms, random);
+            case "RoomOpened":
+                return roomOpenedEvent(timeStamp, availableRooms, random);
+            default:
+                throw new IllegalArgumentException("Invalid event type: " + eventType);
+        }
+
+    }
+
+    private Room getRandomRoom(LocalDate time, List<Room> availableRooms, Random random) {
+        if (!availableRooms.isEmpty()) {
+            return availableRooms.get(random.nextInt(availableRooms.size()));
+        }
+        return null;
+    }
+
+    private String getRandomEventType() {
+        List<String> eventTypes = Arrays.asList("RoomClosed", "RoomCleaned", "RoomOpened");
+        return eventTypes.get(new Random().nextInt(eventTypes.size()));
+    }
+
+
+    private RoomCleaned roomCleanedEvent(LocalDate time, List<Room> availableRooms, Random random) {
+
+        RoomCleaned event = new RoomCleaned();
+        event.setType("RoomCleaned");
+        event.setDate(time);
+        event.setRoom(getRandomRoom(time, availableRooms, random));
+        event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
+        return event;
+    }
+
+        private RoomClosed roomClosedEvent(LocalDate time, List<Room> availableRooms, Random random) {
+
+            RoomClosed event = new RoomClosed();
+            event.setDate(time);
+            event.setType("RoomClosed");
+            event.setRoom(getRandomRoom(time, availableRooms, random));
+            event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
+            return event;
+        }
+
+            private RoomOpened roomOpenedEvent(LocalDate time, List<Room> availableRooms, Random random) {
+
+                RoomOpened event = new RoomOpened();
+                event.setDate(time);
+                event.setType("RoomOpened");
+                event.setRoom(getRandomRoom(time, availableRooms, random));
+                event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
+                return event;
+            }
+
 }

@@ -31,23 +31,22 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Room ID</th>
-
-                    <th>Door Opened</th>
-                    <th>Door Closed</th>
-                    <th>Clean Start</th>
-                    <th>Clean End</th>
+                    <th>Room</th>
+                    <th>Type</th>
                     <th>Employee</th>
+                    <th>Time</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td th:text="${room.id}"></td>
-                    <td th:text="${room.event.openedDoor}"></td>
-                    <td th:text="${room.event.getClosedDoor}"></td>
-                    <td th:text="${room.event.cleanStart}"></td>
-                    <td th:text="${room.event.cleanEnd}"></td>
-                    <td th:text="${room.event.employee}"></td>
+                <tr th:each="event : ${events}">
+                    <td th:text="${room.roomType}"></td>
+                    <td th:text="${event.type}"></td>
+                    <td th:text="${event.employee}"></td>
+                    <td th:text="${event.date}"></td>
+
+
                 </tr>
                 </tbody>
             </table>
