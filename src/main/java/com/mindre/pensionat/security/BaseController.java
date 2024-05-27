@@ -18,11 +18,13 @@ public class BaseController  {
             String buildnumber = env.getProperty("schedule-app.buildnumber");
             String sourceversion = env.getProperty("schedule-app.sourceversion");
 
-            VersionNumber = buildnumber + "-" + sourceversion.substring(0,7);
+            if (sourceversion != null && sourceversion.length() >= 7) {
+                VersionNumber = buildnumber + "-" + sourceversion.substring(0,7);
+            } else {
+                VersionNumber = buildnumber;
+            }
         }
 
         model.addAttribute("VersionNumber", VersionNumber);
     }
-
-
 }

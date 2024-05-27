@@ -31,29 +31,29 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    @PreAuthorize("hasAuthority('Admin')")
+
     public String getCreatePage(Model model) {
         return userDetailsService.getCreatePage(model);
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('Admin')")
+
     public String createUser(UserDto userDto,String group ,BindingResult result) {
         return userDetailsService.createUser(userDto,group,result);
     }
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('Admin')")
+
     public String getUpdatePage(Model model, UUID id) {
         return userDetailsService.getUpdatePage(model,id);
     }
 
     @GetMapping("/update")
-    @PreAuthorize("hasAuthority('Admin')")
+
     public String updateUser(UUID id, UserDto userDto, Model model, BindingResult result) {
         return userDetailsService.updateUser(id,userDto,model,result);
     }
     @GetMapping("/delete")
-    @PreAuthorize("hasAuthority('Admin')")
+
     public String deleteUser(UUID id) {
         return userDetailsService.deleteUser(id);
     }
