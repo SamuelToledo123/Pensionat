@@ -1,5 +1,6 @@
 package com.mindre.pensionat.HtlmControllers;
 
+import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Dtos.RoomDto;
 import com.mindre.pensionat.Services.Impl.RoomServiceImpl;
 import com.mindre.pensionat.events.Event;
