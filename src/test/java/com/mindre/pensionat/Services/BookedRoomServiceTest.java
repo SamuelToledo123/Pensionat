@@ -21,13 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class BookedRoomServiceTest {
     @Autowired
     RoomRepo roomRepo;
-    BookedRoomRepo bookedRoomRepo;
     @Autowired
     BookedRoomServiceHtml sut;
+
+    Room room = new Room();
+
     @BeforeEach
     void init() {
 
-        Room room = new Room();
+       // Room room = new Room();
         room.setId(1L);
         room.setPricePerNight(200.00);
         roomRepo.save(room);
@@ -36,8 +38,8 @@ public class BookedRoomServiceTest {
 
         BookedRoom existingBooking = new BookedRoom();
         existingBooking.setRoom(room);
-        existingBooking.setCheckIn(LocalDate.of(2023, 1, 6));
-        existingBooking.setCheckOut(LocalDate.of(2023, 1, 10));
+        existingBooking.setCheckIn(LocalDate.of(2024, 6, 1));
+        existingBooking.setCheckOut(LocalDate.of(2024, 6, 5));
         existingBookedRooms.add(existingBooking);
         room.setBookedRooms(existingBookedRooms);
 
@@ -45,15 +47,14 @@ public class BookedRoomServiceTest {
     @Test
     @Transactional
     public void testRoomAvailability() {
-        Room room1 = new Room();
-        room1 = roomRepo.save(room1);
-        BookedRoom newBooking = new BookedRoom();
-        newBooking.setRoom(room1);
-        newBooking.setCheckIn(LocalDate.of(2023, 1, 1));
-        newBooking.setCheckOut(LocalDate.of(2023, 1, 5));
-        roomRepo.save(room1);
 
-      //  assertTrue(sut.roomIsAvailable(room1, newBooking,room.getBookedRooms()));
+        BookedRoom newBooking = new BookedRoom();
+        newBooking.setRoom(room);
+        newBooking.setCheckIn(LocalDate.of(2024, 6, 6));
+        newBooking.setCheckOut(LocalDate.of(2024, 6, 10));
+        roomRepo.save(room);
+
+        assertTrue(sut.roomIsAvailable(room, newBooking,room.getBookedRooms()));
     }
 
     @Test
