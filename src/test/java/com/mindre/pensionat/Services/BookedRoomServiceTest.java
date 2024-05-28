@@ -23,8 +23,10 @@ public class BookedRoomServiceTest {
     RoomRepo roomRepo;
     @Autowired
     BookedRoomServiceHtml sut;
+    @Autowired
+    BookedRoomRepo bookedRoomRepo;
 
-    Room room = new Room();
+    private Room room = new Room();
 
     @BeforeEach
     void init() {
@@ -32,7 +34,7 @@ public class BookedRoomServiceTest {
        // Room room = new Room();
         room.setId(1L);
         room.setPricePerNight(200.00);
-        roomRepo.save(room);
+        roomRepo.saveAndFlush(room);
 
         ArrayList<BookedRoom> existingBookedRooms = new ArrayList<>();
 
@@ -44,6 +46,7 @@ public class BookedRoomServiceTest {
         room.setBookedRooms(existingBookedRooms);
 
     }
+
     @Test
     @Transactional
     public void testRoomAvailability() {
@@ -56,17 +59,44 @@ public class BookedRoomServiceTest {
 
         assertTrue(sut.roomIsAvailable(room, newBooking,room.getBookedRooms()));
     }
+    @Test
+    @Transactional
+    public void testRoomAvailabilitySameDate() {
+
+        BookedRoom newBooking = new BookedRoom();
+        newBooking.setRoom(room);
+        newBooking.setCheckIn(LocalDate.of(2024, 6, 1));
+        newBooking.setCheckOut(LocalDate.of(2024, 6, 5));
+        roomRepo.save(room);
+
+        assertFalse(sut.roomIsAvailable(room, newBooking,room.getBookedRooms()));
+    }
+
+    @Test
+    @Transactional
+    public void testRoomAvailabilityOverLappingDate() {
+
+        BookedRoom newBooking = new BookedRoom();
+        newBooking.setRoom(room);
+        newBooking.setCheckIn(LocalDate.of(2024, 6, 3));
+        newBooking.setCheckOut(LocalDate.of(2024, 6, 7));
+        roomRepo.save(room);
+
+        assertFalse(sut.roomIsAvailable(room, newBooking,room.getBookedRooms()));
+    }
 
     @Test
     @Transactional
     public void testCheckReservation() {
-        Long roomId = 1L;
-        BookedRoom bookingRequest = new BookedRoom();
-        bookingRequest.setCheckIn(LocalDate.of(2023, 1, 10));
-        bookingRequest.setCheckOut(LocalDate.of(2023, 1, 15));
+        Room testRoom = new Room(2L,100);
+        roomRepo.save(testRoom);
 
-        sut.checkReservation(roomId, bookingRequest);
-        assertFalse(roomRepo.findById(roomId).get().getBookedRooms().isEmpty());
+        BookedRoom bookingRequest = new BookedRoom();
+        bookingRequest.setCheckIn(LocalDate.of(2025, 1, 10));
+        bookingRequest.setCheckOut(LocalDate.of(2025, 1, 15));
+
+        sut.checkReservation(testRoom.getId(), bookingRequest);
+        assertFalse(roomRepo.findById(testRoom.getId()).get().getBookedRooms().isEmpty());
     }
 
 }
