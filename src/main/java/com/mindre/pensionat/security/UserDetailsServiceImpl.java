@@ -35,7 +35,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public String getUsers(Model model) {
         List<User> users = (List<User>) userRepository.findAll();
-        List<UserDto> userDtos = users.stream().map(UserMapper::toDto).collect(Collectors.toList());
+        List<UserDto> userDtos = users.stream()
+                .map(user -> UserMapper.toDto(user))
+                .collect(Collectors.toList());
         model.addAttribute("users", userDtos);
         return "users/index";
     }
@@ -61,6 +63,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
             if (newUser.getRoles() == null) {
                 newUser.setRoles(new ArrayList<>());
+
             } else {
                 if (newUser.getRoles().contains(userRole)) {
                     throw new RuntimeException("User already has the role: " + userRole.getName());

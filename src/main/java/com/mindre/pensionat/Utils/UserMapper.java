@@ -23,7 +23,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static User toUserDto(UserDto userDto, PasswordEncoder passwordEncoder) {
+    public static User toUserEntity(UserDto userDto, PasswordEncoder passwordEncoder) {
         if (userDto == null) {
             return null;
         }
