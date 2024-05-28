@@ -72,13 +72,15 @@ nav a{
 
 .banner-area {
     width: 100%;
-    height: 800px;
+    height: 1200px;
     position: fixed;
     top: 100px;
     background-image: url('/images/pexels-pixabay-208736.jpg');
     -webkit-background-size:cover;
     background-size:cover ;
     background-position: bottom center;
+
+
 
 }
 .banner-area h2 {
