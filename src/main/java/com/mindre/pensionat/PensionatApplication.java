@@ -3,6 +3,7 @@ package com.mindre.pensionat;
 import com.mindre.pensionat.Models.Room;
 import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Repo.RoomRepo;
+import com.mindre.pensionat.events.EventSeeder;
 import com.mindre.pensionat.security.UserDataSeeder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,12 @@ public class PensionatApplication {
 
     @Autowired
     private UserDataSeeder userDataSeeder;
+
+    @Autowired
+    private RoomDataSeeder roomDataSeeder;
+
+    @Autowired
+    private EventSeeder eventSeeder;
     private static final Logger logger = LoggerFactory.getLogger(PensionatApplication.class);
 
     public static void main(String[] args) {
@@ -34,6 +41,7 @@ public class PensionatApplication {
         return args -> {
 
 
+
             try {
                 userDataSeeder.Seed();
                 logger.info("UserDataSeeder Successfully");
@@ -41,7 +49,19 @@ public class PensionatApplication {
                 logger.error("Couldn't seed UserData");
             }
 
-        };
+            try {
+            roomDataSeeder.seed();
+            logger.info("RoomDataSeeder successful");
+        } catch (Exception e) {
+            logger.error("Couldn't seed room data", e);
+        }
+            try {
+               eventSeeder.seed();
+                logger.info("event successful");
+            } catch (Exception e) {
+                logger.error("couldnt seed events", e);
+            }
+    };
     }
 }
 

@@ -36,23 +36,17 @@
                     <th>Room Size</th>
                     <th>Amount of Beds</th>
                     <th>Action</th>
-
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="room : ${rooms}">
                     <td th:text="${room.id}"></td>
-                    <td th:text="${room.roomType}"></td>
-                    <td th:text="${room.roomSize}"></td>
-                    <td th:text="${room.amountOfBeds}"></td>
-                    <!--<td th:text="${room.av}"></td>-->
-
-                    <td style="white-space: nowrap">
-                        <a class="btn btn-primary btn-sm" th:href="@{/rooms/info/{id}(id=${room.id})}">Status</a>
+                    <td th:text="${room?.roomType}"></td>
+                    <td th:text="${room?.roomSize}"></td>
+                    <td th:text="${room?.amountOfBeds}"></td>
+                    <td>
+                        <a th:href="@{/rooms/info/{id}(id=${room.id})}" class="btn btn-primary">Room Status</a>
                     </td>
-                    <!--<a class="btn btn-danger btn-sm "
-                       th:href="@{/customers/delete(id=${customer.id})}"
-                       onclick="return confirm('Are you sure?')">Delete</a>-->
                 </tr>
                 </tbody>
             </table>

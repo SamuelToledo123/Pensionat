@@ -1,5 +1,6 @@
 package com.mindre.pensionat.Models;
 
+import com.mindre.pensionat.events.Event;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,10 +27,6 @@ public class Room {
 
     @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL)
     private List<BookedRoom> bookedRooms;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     public Room(Long id, String roomType, int roomSize, int amountOfBeds, boolean available) {
         this.id = id;

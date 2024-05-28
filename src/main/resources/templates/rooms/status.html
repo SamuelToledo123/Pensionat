@@ -29,30 +29,30 @@
             <h1 class="text-center my-4">Room</h1>
 
             <table class="table">
+
                 <thead>
                 <tr>
-                    <th>Room ID</th>
-                    <th>Event ID</th>
-                    <th>Door Opened</th>
-                    <th>Door Closed</th>
-                    <th>Clean Start</th>
-                    <th>Clean End</th>
-                    <th>Employee</th>
+                    <th>Room</th>
+                    <th>Type</th>
+                    <th>By Employee</th>
+                    <th>Date & Time</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
+                <tr th:each="event : ${events}">
                     <td th:text="${room.id}"></td>
-                    <td th:text="${room.event.id}"></td>
-                    <td th:text="${room.event.openedDoor}"></td>
-                    <td th:text="${room.event.getClosedDoor()}"></td>
-                    <td th:text="${room.event.cleanStart}"></td>
-                    <td th:text="${room.event.cleanEnd}"></td>
-                    <td th:text="${room.event.employee}"></td>
+                    <td th:text="${event.type}"></td>
+                    <td th:text="${event.employee}"></td>
+                    <td th:text="${event.formattedDateTime}"></td>
+
                 </tr>
                 </tbody>
             </table>
+            <a class="btn btn-outline-primary" href="/rooms" role="button">Go back</a>
         </div>
+
     </div>
 </div>
 
