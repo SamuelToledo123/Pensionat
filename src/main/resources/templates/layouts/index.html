@@ -15,27 +15,25 @@
 
         <div class="wrapper d-flex align-items-center justify-content-between">
             <div class="logo">
-                <a href="index.html">Pensionat</a>
+                <a href="/">Pensionat</a>
 
             </div>
 
             <nav class = "d-flex">
-                <a href="/booking/create">Reservation</a>
-                <a href="/customers">Customers</a>
-                <a href="/booking/edit">Bookings</a>
-                <a href="/contract/customers">Contracts</a>
-                <a href="/rooms">Rooms</a>
-                <a href="/admin">Admin</a>
+                <a href="/booking/create" sec:authorize="isAuthenticated()">Reservation</a>
+                <a href="/customers" sec:authorize="isAuthenticated()">Customers </a>
+                <a href="/booking/edit" sec:authorize="isAuthenticated()">Bookings</a>
+                <a href="/contract/customers" sec:authorize="isAuthenticated()">Contracts</a>
+                <a href="/rooms" sec:authorize="isAuthenticated()">Rooms </a>
+                <a href="/admin" style="text-decoration-color: #009879" sec:authorize="hasAuthority('Admin')">Admin </a>
+                <a href="/login" sec:authorize="!isAuthenticated()">Login</a>
+                <a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
 
-                <a sec:authorize="!isAuthenticated()">Login</a>
-                <div sec:authorize="isAuthenticated()">
-                    <a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
-
-
+            </nav>
 
                 </div>
-            </nav>
-        </div>
+    </header>
+
 
 
     </header>

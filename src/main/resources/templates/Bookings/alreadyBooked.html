@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>Reservation Form</title>
@@ -13,13 +15,17 @@
     <header>
         <div class="wrapper">
             <div class="logo">
-                <a href="/index.html">Pensionat</a>
+                <a href="/">Pensionat</a>
             </div>
             <nav>
-                <a href="/booking/create">New Reservation</a>
-                <a href="/customers">All Customers</a>
-                <a href="/booking/edit">All bookings</a>
-                <a href="/customers/contract">contracts</a>
+                <a href="/booking/create" sec:authorize="isAuthenticated()">Reservation</a>
+                <a href="/customers" sec:authorize="isAuthenticated()">Customers </a>
+                <a href="/booking/edit" sec:authorize="isAuthenticated()">Bookings</a>
+                <a href="/contract/customers" sec:authorize="isAuthenticated()">Contracts</a>
+                <a href="/rooms" sec:authorize="isAuthenticated()">Rooms </a>
+                <a href="/admin" sec:authorize="hasAuthority('Admin')">Admin</a>
+                <a href="/login" sec:authorize="!isAuthenticated()">Login</a>
+                <a href="/logout" sec:authorize="isAuthenticated()">Logout</a>
             </nav>
         </div>
     </header>
