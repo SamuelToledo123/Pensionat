@@ -60,18 +60,7 @@ public class RoomServiceTest {
     @Test
     public void testFindAllRooms() {
         List<RoomDto> roomDtoList = roomService.findAllRooms();
-
-
-
-
         assertEquals(2, roomDtoList.size());
 
-
-
-
     }
-
-
-
-
 }
