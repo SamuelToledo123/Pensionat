@@ -6,6 +6,6 @@ import lombok.Data;
 @Entity
 @Data
 public class RoomCleaned extends Event{
-    public String employee;
+
 
 }
