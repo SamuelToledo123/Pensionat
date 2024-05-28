@@ -26,16 +26,7 @@ public class DiscountService {
         double basePrice = pricePerNight * days;
         double discountRate = (days >= 2) ? 0.005 : 0.0;
 
-
-        LocalDate date = checkIn;
-        boolean sundayToMondayIncluded = false;
-        while (date.isBefore(checkOut)) {
-            if (date.getDayOfWeek() == DayOfWeek.SUNDAY && date.plusDays(1).getDayOfWeek() == DayOfWeek.MONDAY) {
-                sundayToMondayIncluded = true;
-                break;
-            }
-            date = date.plusDays(1);
-        }
+        boolean sundayToMondayIncluded = checkSundayToMonday(checkIn,checkOut);
 
         if (sundayToMondayIncluded) {
             discountRate += 0.02;
@@ -45,5 +36,19 @@ public class DiscountService {
         double totalPrice = basePrice - discount;
 
         return totalPrice;
+    }
+
+    protected boolean checkSundayToMonday(LocalDate checkIn, LocalDate checkOut){
+
+        boolean sundayToMondayIncluded = false;
+        while (checkIn.isBefore(checkOut)) {
+            if (checkIn.getDayOfWeek() == DayOfWeek.SUNDAY && checkIn.plusDays(1).getDayOfWeek() == DayOfWeek.MONDAY) {
+                sundayToMondayIncluded = true;
+                break;
+            }
+            checkIn = checkIn.plusDays(1);
+        }
+
+       return sundayToMondayIncluded;
     }
 }

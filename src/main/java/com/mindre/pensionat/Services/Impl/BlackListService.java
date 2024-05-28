@@ -2,8 +2,11 @@ package com.mindre.pensionat.Services.Impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mindre.pensionat.configuration.IntegrationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,8 +20,15 @@ import java.util.List;
 
 @Service
 public class BlackListService {
-    //private final BlacklistModel blacklist = new BlacklistModel();
-    private final String BLACKLIST_URL = "https://javabl.systementor.se/api/MSK/blacklist";
+
+    private final IntegrationProperties properties;
+    private final String BLACKLIST_URL;
+    @Autowired
+    public BlackListService(IntegrationProperties properties) {
+        this.properties = properties;
+        this.BLACKLIST_URL = properties.getBlacklistUrl();
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(BlackListService.class);
 
     public boolean checkIfBlacklisted(String email) {
@@ -82,6 +92,7 @@ public class BlackListService {
         }
         return blacklisted;
 }
+
 }
 
 

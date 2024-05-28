@@ -41,6 +41,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.0")
     
 
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<Test> {

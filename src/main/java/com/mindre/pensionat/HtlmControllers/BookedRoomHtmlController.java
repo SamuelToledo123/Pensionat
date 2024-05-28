@@ -30,7 +30,8 @@ public class BookedRoomHtmlController {
     @Autowired
     private final BookedRoomServiceHtml bookedRoomServiceHtml;
     private final RoomRepo roomRepo;
-    private final BlackListService blackList = new BlackListService();
+    @Autowired
+    private final BlackListService blackList;
 
 
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);

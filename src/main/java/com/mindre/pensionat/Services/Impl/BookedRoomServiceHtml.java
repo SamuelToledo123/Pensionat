@@ -138,7 +138,7 @@ public class BookedRoomServiceHtml {
     }
 
 
-    private boolean roomIsAvailable(Room room, BookedRoom reservationRequest, List<BookedRoom> existingReservations) {
+    public boolean roomIsAvailable(Room room, BookedRoom reservationRequest, List<BookedRoom> existingReservations) {
         return existingReservations.stream()
                 .filter(existingBooking -> existingBooking.getRoom().equals(room))
                 .noneMatch(existingBooking ->

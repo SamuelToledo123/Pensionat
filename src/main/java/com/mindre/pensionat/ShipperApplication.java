@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.mindre.pensionat.Models.Shippers;
 import com.mindre.pensionat.Repo.ShippersRepo;
+import com.mindre.pensionat.configuration.IntegrationProperties;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,16 @@ import java.net.URL;
 public class ShipperApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ShipperApplication.class);
-    private final ShippersRepo repo;
+    @Autowired
+    private ShippersRepo repo;
+    private final IntegrationProperties properties;
+    private final String CONTRACT_URL;
+    @Autowired
+    public ShipperApplication(IntegrationProperties properties) {
+        this.properties = properties;
+        this.CONTRACT_URL = properties.getShipperUrl();
+    }
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -29,7 +40,7 @@ public class ShipperApplication implements CommandLineRunner {
       try{
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Shippers[] shippers = objectMapper.readValue(new URL("https://javaintegration.systementor.se/shippers"),
+        Shippers[] shippers = objectMapper.readValue(new URL(properties.getShipperUrl()),
                 Shippers[].class);
 
         for (Shippers shipper : shippers) {
