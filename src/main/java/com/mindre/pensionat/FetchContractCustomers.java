@@ -6,9 +6,11 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.mindre.pensionat.Models.AllContractCustomers;
 import com.mindre.pensionat.Models.ContractCustomer;
 import com.mindre.pensionat.Repo.ContractCustomerRepo;
+import com.mindre.pensionat.configuration.IntegrationProperties;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +19,16 @@ import java.net.URL;
 @Component
 @RequiredArgsConstructor
 public class FetchContractCustomers implements CommandLineRunner {
-
-    private final ContractCustomerRepo repo;
+    @Autowired
+    private ContractCustomerRepo repo;
     private static final Logger logger = LoggerFactory.getLogger(FetchContractCustomers.class);
+    private final IntegrationProperties properties;
+    private final String CONTRACT_URL;
+    @Autowired
+    public FetchContractCustomers(IntegrationProperties properties) {
+        this.properties = properties;
+        this.CONTRACT_URL = properties.getContractUrl();
+    }
 
     @Override
     public void run(String... args) throws Exception {
@@ -30,7 +39,7 @@ public class FetchContractCustomers implements CommandLineRunner {
             JacksonXmlModule module = new JacksonXmlModule();
             module.setDefaultUseWrapper(false);
             XmlMapper xmlMapper = new XmlMapper(module);
-            AllContractCustomers allContractCustomers = xmlMapper.readValue(new URL("https://javaintegration.systementor.se/customers"),
+            AllContractCustomers allContractCustomers = xmlMapper.readValue(new URL(CONTRACT_URL),
                     AllContractCustomers.class);
 
             for (ContractCustomer c : allContractCustomers.customers) {
