@@ -24,7 +24,7 @@ public class BookedRoomServiceTest {
     @Autowired
     BookedRoomServiceHtml sut;
 
-    Room room = new Room();
+    private Room room = new Room();
 
     @BeforeEach
     void init() {
