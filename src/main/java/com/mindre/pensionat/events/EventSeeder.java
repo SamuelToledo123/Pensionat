@@ -29,6 +29,8 @@ public class EventSeeder {
     private EventRepo eventRepo;
     private final Random random = new Random();
 
+    LocalDateTime time;
+
     @Transactional
     public void seed() {
 
