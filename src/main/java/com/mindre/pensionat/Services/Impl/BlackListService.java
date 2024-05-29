@@ -47,51 +47,10 @@ public class BlackListService {
 
         } catch (Exception e) {
             System.err.println("Request failed: " + e.getMessage());
+            logger.error("Request failed" + e.getMessage());
         }
         return false;
     }
-    public void addToBlacklist() {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BLACKLIST_URL))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"stefa@aaasdadsdsd.com\", \"name\":\"Kalle\",  \"isOk\":\"false\" }"))
-                .build();
-
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenAccept(System.out::println)
-                .join();
-
-    }
-    public List<String> fetchBlacklisted() throws IOException, InterruptedException {
-
-        System.out.println("fetchBlacklisted called");
-        List<String> blacklisted = new ArrayList<>();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BLACKLIST_URL))
-                .GET()
-                .build();
-
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            String responseBody = response.body();
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(responseBody);
-
-            for (JsonNode node : jsonNode) {
-                String email = node.get("email").asText();
-                blacklisted.add(email);
-            }
-        }
-        catch (Exception e) {
-            logger.error("Fetching error:" + e.getMessage());
-        }
-        return blacklisted;
-}
 
 }
 

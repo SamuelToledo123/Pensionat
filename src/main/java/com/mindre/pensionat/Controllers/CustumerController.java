@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("pensionat")
 @RequiredArgsConstructor
-public class CostumerController {
+public class CustumerController {
 
     @Autowired
     private final CustomerService customerService;
