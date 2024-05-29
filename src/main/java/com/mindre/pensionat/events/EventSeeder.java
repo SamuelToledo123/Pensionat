@@ -27,6 +27,7 @@ public class EventSeeder {
 
     @Autowired
     private EventRepo eventRepo;
+    private final Random random = new Random();
 
     Random random = new Random();
 
