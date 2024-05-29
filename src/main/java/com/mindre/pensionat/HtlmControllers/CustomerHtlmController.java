@@ -2,12 +2,19 @@ package com.mindre.pensionat.HtlmControllers;
 
 import com.mindre.pensionat.Dtos.CustomerDto;
 import com.mindre.pensionat.Models.ContractCustomer;
+import com.mindre.pensionat.Models.Customer;
+import com.mindre.pensionat.Repo.CustomerRepo;
 import com.mindre.pensionat.Services.Impl.BookedRoomServiceHtml;
 import com.mindre.pensionat.Services.Impl.CustomerServiceHtmlImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +27,8 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerHtlmController {
 
+    @Autowired
+    CustomerRepo customerRepo;
 
     private final CustomerServiceHtmlImpl customerServiceHtmlImpl;
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceHtmlImpl.class);
@@ -38,11 +47,22 @@ public class CustomerHtlmController {
     }
 
 
-
     @GetMapping({"", "/"})
+    public String getInfoCustomers(@RequestParam(name = "sortCol", defaultValue = "firstName") String sortCol,
+                                   @RequestParam(name = "sortOrder", defaultValue = "asc") String sortOrder,
+                                   Model model) {
+        List<Customer> customers = customerServiceHtmlImpl.getAllCustomersSorted(sortCol, sortOrder);
+        model.addAttribute("customers", customers);
+        model.addAttribute("sortCol", sortCol);
+        model.addAttribute("sortOrder", sortOrder);
+        model.addAttribute("reverseSortOrder", sortOrder.equals("asc") ? "desc" : "asc");
+        return "customers/index";
+    }
+
+   /* @GetMapping({"", "/"})
     public String getInfoCustomers(Model model) {
         return customerServiceHtmlImpl.getInfoCustomers(model);
-    }
+    }*/
 
     @GetMapping("/create")
     public String getCreatePage(Model model) {

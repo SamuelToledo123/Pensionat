@@ -32,12 +32,12 @@ public class CustomerServiceHtmlImpl {
     private static final Logger logger = LoggerFactory.getLogger(BookedRoomServiceHtml.class);
 
 
-    @GetMapping({"","/"})
+   /* @GetMapping({"","/"})
     public String getInfoCustomers(Model model) {
         List<Customer> customers = customerRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
         model.addAttribute("customers",customers);
         return "customers/index";
-    }
+    }*/
     @GetMapping("/create")
     public String getCreatePage(Model model) {
         CustomerDto customerDto = new CustomerDto();
@@ -146,6 +146,11 @@ public class CustomerServiceHtmlImpl {
             System.out.println("Error While deleting customer!" + e.getMessage());
         }
         return "redirect:/customers";
+    }
+
+    public List<Customer> getAllCustomersSorted(String sortCol, String sortOrder) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortCol);
+        return customerRepo.findAll(sort);
     }
 
 }
