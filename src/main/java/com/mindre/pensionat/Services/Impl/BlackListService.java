@@ -29,6 +29,7 @@ public class BlackListService {
         this.BLACKLIST_URL = properties.getBlacklistUrl();
     }
 
+
     private static final Logger logger = LoggerFactory.getLogger(BlackListService.class);
 
     public boolean checkIfBlacklisted(String email) {
