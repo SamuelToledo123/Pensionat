@@ -27,36 +27,37 @@ public class EventSeeder {
 
     @Autowired
     private EventRepo eventRepo;
+    private final Random random = new Random();
 
     @Transactional
     public void seed() {
-        Random random = new Random();
+
         List<Room> availableRooms = roomRepo.findAll();
         LocalDateTime now = LocalDateTime.now();
         IntStream.range(0, 20).forEach(i -> {
-            Event event = createRandomEvent(now, availableRooms, random);
+            Event event = createRandomEvent(now, availableRooms);
             eventRepo.save(event);
 
             eventRepo.save(event);
         });
     }
 
-    private Event createRandomEvent(LocalDateTime timeStamp, List<Room> availableRooms, Random random) {
+    private Event createRandomEvent(LocalDateTime timeStamp, List<Room> availableRooms) {
         String eventType = getRandomEventType();
         switch (eventType) {
             case "RoomClosed":
-                return roomClosedEvent(timeStamp, availableRooms, random);
+                return roomClosedEvent(timeStamp, availableRooms);
             case "RoomCleaned":
-                return roomCleanedEvent(timeStamp, availableRooms, random);
+                return roomCleanedEvent(timeStamp, availableRooms);
             case "RoomOpened":
-                return roomOpenedEvent(timeStamp, availableRooms, random);
+                return roomOpenedEvent(timeStamp, availableRooms);
             default:
                 throw new IllegalArgumentException("Invalid event type: " + eventType);
         }
 
     }
 
-    private Room getRandomRoom(LocalDateTime time, List<Room> availableRooms, Random random) {
+    private Room getRandomRoom(List<Room> availableRooms) {
         if (!availableRooms.isEmpty()) {
             return availableRooms.get(random.nextInt(availableRooms.size()));
         }
@@ -69,32 +70,32 @@ public class EventSeeder {
     }
 
 
-    private RoomCleaned roomCleanedEvent(LocalDateTime time, List<Room> availableRooms, Random random) {
+    private RoomCleaned roomCleanedEvent(LocalDateTime time, List<Room> availableRooms) {
 
         RoomCleaned event = new RoomCleaned();
         event.setType("RoomCleaned");
         event.setDate(time);
-        event.setRoom(getRandomRoom(time, availableRooms, random));
+        event.setRoom(getRandomRoom(availableRooms));
         event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
         return event;
     }
 
-        private RoomClosed roomClosedEvent(LocalDateTime time, List<Room> availableRooms, Random random) {
+        private RoomClosed roomClosedEvent(LocalDateTime time, List<Room> availableRooms) {
 
             RoomClosed event = new RoomClosed();
             event.setDate(time);
             event.setType("RoomClosed");
-            event.setRoom(getRandomRoom(time, availableRooms, random));
+            event.setRoom(getRandomRoom(availableRooms));
             event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
             return event;
         }
 
-            private RoomOpened roomOpenedEvent(LocalDateTime time, List<Room> availableRooms, Random random) {
+            private RoomOpened roomOpenedEvent(LocalDateTime time, List<Room> availableRooms) {
 
                 RoomOpened event = new RoomOpened();
                 event.setDate(time);
                 event.setType("RoomOpened");
-                event.setRoom(getRandomRoom(time, availableRooms, random));
+                event.setRoom(getRandomRoom(availableRooms));
                 event.setEmployee(EMPLOYEES.get(random.nextInt(EMPLOYEES.size())));
                 return event;
             }
